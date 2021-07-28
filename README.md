@@ -9,15 +9,17 @@ Projeto semestral de **Programação Orientada a Objetos para Web I** focado em 
 - Servlet
 - JSP  
 - Bootstrap
-- PostgreSQL
+
+### Serviços adicionais
+- **Banco de dados**: PostgreSQL
+- **Servidor**: WildFly
 
 ### TODO
 
-- [ ] Tabelas do banco de dados
-- [ ] Conexão com o PostgresSQL
+- [x] Tabelas SQL
+- [x] Conexão com a base de dados
 - [ ] Classes DAO
-- [ ] Conexão com servidor WildFly
 - [ ] Classes de controle
 - [ ] Páginas de visualização
 - [ ] Tratamento de requisições
-- [ ] Classes de login
+- [ ] Classes e implementação de _login_
