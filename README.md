@@ -16,7 +16,7 @@ Projeto semestral de **Programação Orientada a Objetos para Web I** focado em 
 
 ### TODO
 
-- [x] Tabelas SQL
+- [x] Tabelas do banco 
 - [x] Conexão com a base de dados
 - [ ] Classes DAO
 - [ ] Classes de controle
