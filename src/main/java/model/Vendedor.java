@@ -3,8 +3,11 @@ package model;
 public class Vendedor {
 
     private int id;
-    private String nome;
     private Usuario usuario;
+
+    public Vendedor(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public int getId() {
         return id;
@@ -12,14 +15,6 @@ public class Vendedor {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public Usuario getUsuario() {
