@@ -1,12 +1,9 @@
 package model;
 
-import java.math.BigDecimal;
-
 public class ItemCompra {
 
     private int id;
     private int quantidade;
-    private BigDecimal valor;
     private Produto produto;
     private Compra compra;
 
@@ -24,14 +21,6 @@ public class ItemCompra {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
     }
 
     public Produto getProduto() {

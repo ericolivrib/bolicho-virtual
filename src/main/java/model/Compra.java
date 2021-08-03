@@ -1,16 +1,13 @@
 package model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Compra {
 
     private int id;
-    private BigDecimal valorTotal;
-    private boolean pendente;
-    private boolean cancelada;
-    private LocalDateTime dataHoraCompra;
-    private LocalDateTime dataHoraCancelamento;
+    private BigDecimal valor;
+    private LocalDate dataPedido;
     private Cliente cliente;
     private Vendedor vendedor;
 
@@ -22,44 +19,12 @@ public class Compra {
         this.id = id;
     }
 
-    public BigDecimal getValorTotal() {
-        return valorTotal;
+    public BigDecimal getValor() {
+        return valor;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public boolean isPendente() {
-        return pendente;
-    }
-
-    public void setPendente(boolean pendente) {
-        this.pendente = pendente;
-    }
-
-    public boolean isCancelada() {
-        return cancelada;
-    }
-
-    public void setCancelada(boolean cancelada) {
-        this.cancelada = cancelada;
-    }
-
-    public LocalDateTime getDataHoraCompra() {
-        return dataHoraCompra;
-    }
-
-    public void setDataHoraCompra(LocalDateTime dataHoraCompra) {
-        this.dataHoraCompra = dataHoraCompra;
-    }
-
-    public LocalDateTime getDataHoraCancelamento() {
-        return dataHoraCancelamento;
-    }
-
-    public void setDataHoraCancelamento(LocalDateTime dataHoraCancelamento) {
-        this.dataHoraCancelamento = dataHoraCancelamento;
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
     public Cliente getCliente() {
