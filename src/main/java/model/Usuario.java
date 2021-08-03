@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.Date;
+
 public class Usuario {
 
     private int id;
@@ -7,20 +9,23 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
+    private Date dataCadastro;
 
-    public Usuario(String nome, String email, String telefone, String senha) {
+    public Usuario(String nome, String email, String telefone, String senha, Date dataCadastro) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
+        this.dataCadastro = dataCadastro;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha) {
+    public Usuario(int id, String nome, String email, String telefone, String senha, Date dataCadastro) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
+        this.dataCadastro = dataCadastro;
     }
 
     public Usuario(int id) {
@@ -65,5 +70,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

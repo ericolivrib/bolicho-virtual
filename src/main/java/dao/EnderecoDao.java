@@ -1,11 +1,11 @@
 package dao;
 
-import model.Usuario;
+import model.Endereco;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UsuarioDao {
+public class EnderecoDao {
 
     private String status;
     private String sql;
@@ -13,43 +13,42 @@ public class UsuarioDao {
     private PreparedStatement ps;
     private ResultSet rs;
 
-    public ArrayList<Usuario> selecionar() {
+    public ArrayList<Endereco> selecionar() {
 
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+        ArrayList<Endereco> enderecos = new ArrayList<>();
 
         try (Connection conexao = new ConexaoBase().getConexao()) {
 
-            sql = "SELECT * FROM usuario";
+            sql = "SELECT * FROM endereco";
 
             stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+            rs = ps.executeQuery(sql);
 
             while (rs.next()) {
-                Usuario usuario = new Usuario (
+                Endereco endereco = new Endereco(
                         rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("senha"),
-                        rs.getDate("data_cadastro")
+                        rs.getString("rua"),
+                        rs.getInt("numero_casa"),
+                        rs.getString("bairro"),
+                        rs.getString("complemento")
                 );
 
-                usuarios.add(usuario);
+                enderecos.add(endereco);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return usuarios;
+        return enderecos;
     }
 
-    public Usuario selecionar(int id) {
+    public Endereco selecionar(int id) {
 
-        Usuario usuario = null;
+        Endereco endereco = null;
 
         try (Connection conexao = new ConexaoBase().getConexao()) {
 
-            sql = "SELECT * FROM usuario WHERE id = ?";
+            sql = "SELECT * FROM endereco WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
@@ -57,35 +56,34 @@ public class UsuarioDao {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                usuario = new Usuario (
+                endereco = new Endereco(
                         rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("senha"),
-                        rs.getDate("data_cadastro")
+                        rs.getString("rua"),
+                        rs.getInt("numero_casa"),
+                        rs.getString("bairro"),
+                        rs.getString("complemento")
                 );
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return usuario;
+        return endereco;
     }
 
-    public String inserir(Usuario usuario) {
+    public String inserir(Endereco endereco) {
 
         try (Connection conexao = new ConexaoBase().getConexao()) {
 
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO usuario (nome, telefone, email, senha, data_cadastro) VALUES (?, ?, ?, ?, CURRENT_DATE)";
+            sql = "INSERT INTO endereco (rua, numero_casa, bairro, complemento) VALUES (?, ?, ?, ?)";
 
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, usuario.getNome());
-            ps.setString(2, usuario.getTelefone());
-            ps.setString(3, usuario.getEmail());
-            ps.setString(4, usuario.getSenha());
+            ps.setString(1, endereco.getRua());
+            ps.setInt(2, endereco.getNumeroCasa());
+            ps.setString(3, endereco.getBairro());
+            ps.setString(4, endereco.getComplemento());
 
             ps.executeUpdate();
 
@@ -101,20 +99,20 @@ public class UsuarioDao {
         return status;
     }
 
-    public String atualizar(Usuario usuario) {
+    public String atualzar(Endereco endereco) {
 
         try (Connection conexao = new ConexaoBase().getConexao()) {
 
             conexao.setAutoCommit(false);
 
-            sql = "UPDATE usuario SET nome = ?, telefone = ?, email = ?, senha = ? WHERE id = ?";
+            sql = "UPDATE endereco SET rua = ?, numero_casa = ?, bairro = ?, complemento = ? WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, usuario.getNome());
-            ps.setString(2, usuario.getTelefone());
-            ps.setString(3, usuario.getEmail());
-            ps.setString(4, usuario.getSenha());
-            ps.setInt(5, usuario.getId());
+            ps.setString(1, endereco.getRua());
+            ps.setInt(2, endereco.getNumeroCasa());
+            ps.setString(3, endereco.getBairro());
+            ps.setString(4, endereco.getComplemento());
+            ps.setInt(5, endereco.getId());
 
             ps.executeUpdate();
 
@@ -130,16 +128,17 @@ public class UsuarioDao {
         return status;
     }
 
-    public String deletar(Usuario usuario) {
+    public String deletar(Endereco endereco) {
 
         try (Connection conexao = new ConexaoBase().getConexao()) {
 
             conexao.setAutoCommit(false);
 
-            sql = "DELETE FROM usuario WHERE id = ?";
+            sql = "DELETE FROM endereco WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
-            ps.setInt(1, usuario.getId());
+            ps.setInt(1, endereco.getId());
+
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
