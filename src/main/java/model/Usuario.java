@@ -10,22 +10,38 @@ public class Usuario {
     private String telefone;
     private String senha;
     private Date dataCadastro;
+    private Endereco endereco;
 
-    public Usuario(String nome, String email, String telefone, String senha, Date dataCadastro) {
+    public Usuario(String nome, String email, String telefone, String senha, Endereco endereco) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
-        this.dataCadastro = dataCadastro;
+        this.endereco = endereco;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha, Date dataCadastro) {
+    public Usuario(int id, String nome, String email, String telefone, String senha, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+        this.endereco = endereco;
+    }
+
+    public Usuario(int id, String nome, String email, String telefone, String senha, Date dataCadastro, Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
         this.dataCadastro = dataCadastro;
+        this.endereco = endereco;
+    }
+
+    public Usuario(int id, Endereco endereco) {
+        this.id = id;
+        this.endereco = endereco;
     }
 
     public Usuario(int id) {
@@ -78,5 +94,13 @@ public class Usuario {
 
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

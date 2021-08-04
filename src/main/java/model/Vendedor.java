@@ -9,6 +9,15 @@ public class Vendedor {
         this.usuario = usuario;
     }
 
+    public Vendedor(int id) {
+        this.id = id;
+    }
+
+    public Vendedor(int id, Usuario usuario) {
+        this.id = id;
+        this.usuario = usuario;
+    }
+
     public int getId() {
         return id;
     }

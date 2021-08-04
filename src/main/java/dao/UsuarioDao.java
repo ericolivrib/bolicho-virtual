@@ -12,101 +12,102 @@ public class UsuarioDao {
     private Statement stmt;
     private PreparedStatement ps;
     private ResultSet rs;
+    private Connection conexao;
 
-    public ArrayList<Usuario> selecionar() {
+    public UsuarioDao(Connection conexao) {
+        this.conexao = conexao;
+    }
+
+    public ArrayList<Usuario> selecionar() throws SQLException {
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
+        sql = "SELECT * FROM usuario";
 
-            sql = "SELECT * FROM usuario";
+        stmt = conexao.createStatement();
+        rs = stmt.executeQuery(sql);
 
-            stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            Usuario usuario = new Usuario (
+                    rs.getInt("id"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("telefone"),
+                    rs.getString("senha"),
+                    rs.getDate("data_cadastro"),
+                    new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id"))
+            );
 
-            while (rs.next()) {
-                Usuario usuario = new Usuario (
-                        rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("senha"),
-                        rs.getDate("data_cadastro")
-                );
-
-                usuarios.add(usuario);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            usuarios.add(usuario);
         }
 
         return usuarios;
     }
 
-    public Usuario selecionar(int id) {
+    public Usuario selecionar(int id) throws SQLException {
 
         Usuario usuario = null;
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
+        sql = "SELECT * FROM usuario WHERE id = ?";
 
-            sql = "SELECT * FROM usuario WHERE id = ?";
+        ps = conexao.prepareStatement(sql);
+        ps.setInt(1, id);
 
-            ps = conexao.prepareStatement(sql);
-            ps.setInt(1, id);
+        rs = ps.executeQuery();
 
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                usuario = new Usuario (
-                        rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("senha"),
-                        rs.getDate("data_cadastro")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (rs.next()) {
+            usuario = new Usuario (
+                    rs.getInt("id"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("telefone"),
+                    rs.getString("senha"),
+                    rs.getDate("data_cadastro"),
+                    new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id"))
+            );
         }
 
         return usuario;
     }
 
-    public String inserir(Usuario usuario) {
+    public String inserir(Usuario usuario) throws SQLException {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
+        conexao.setAutoCommit(false);
 
-            conexao.setAutoCommit(false);
+        String retorno = new EnderecoDao(conexao).inserir(usuario.getEndereco());
 
-            sql = "INSERT INTO usuario (nome, telefone, email, senha, data_cadastro) VALUES (?, ?, ?, ?, CURRENT_DATE)";
+        if (retorno.equals("OK")) {
+            sql = "INSERT INTO usuario (nome, telefone, email, senha, endereco_id, data_cadastro) " +
+                    "VALUES (?, ?, ?, ?, ?, CURRENT_DATE)";
 
-            ps = conexao.prepareStatement(sql);
+            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, usuario.getNome());
             ps.setString(2, usuario.getTelefone());
             ps.setString(3, usuario.getEmail());
             ps.setString(4, usuario.getSenha());
+            ps.setInt(5, usuario.getEndereco().getId());
 
-            ps.executeUpdate();
+            ps.execute();
+            rs = ps.getGeneratedKeys();
+            rs.next();
 
-            if (ps.getUpdateCount() > 0) {
+            if (rs.getInt(1) > 0) {
+                usuario.setId(rs.getInt(1));
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            status = "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
-    public String atualizar(Usuario usuario) {
+    public String atualizar(Usuario usuario) throws SQLException {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
+        conexao.setAutoCommit(false);
 
-            conexao.setAutoCommit(false);
+        String retorno = new EnderecoDao(conexao).atualizar(usuario.getEndereco());
 
+        if (retorno.equals("OK")) {
             sql = "UPDATE usuario SET nome = ?, telefone = ?, email = ?, senha = ? WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
@@ -120,37 +121,32 @@ public class UsuarioDao {
 
             if (ps.getUpdateCount() > 0) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            status = "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
-    public String deletar(Usuario usuario) {
+    public String deletar(Usuario usuario) throws SQLException {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
+        conexao.setAutoCommit(false);
 
-            conexao.setAutoCommit(false);
+        sql = "DELETE FROM usuario WHERE id = ?";
 
-            sql = "DELETE FROM usuario WHERE id = ?";
+        ps = conexao.prepareStatement(sql);
+        ps.setInt(1, usuario.getId());
+        ps.executeUpdate();
 
-            ps = conexao.prepareStatement(sql);
-            ps.setInt(1, usuario.getId());
-            ps.executeUpdate();
+        if (ps.getUpdateCount() > 0) {
+            String retorno = new EnderecoDao(conexao).deletar(usuario.getEndereco());
 
-            if (ps.getUpdateCount() > 0) {
+            if (retorno.equals("OK")) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            status = "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 }

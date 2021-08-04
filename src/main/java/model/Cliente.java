@@ -3,10 +3,18 @@ package model;
 public class Cliente {
 
     private int id;
-    private Endereco endereco;
     private Usuario usuario;
 
+    public Cliente(int id) {
+        this.id = id;
+    }
+
     public Cliente(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Cliente(int id, Usuario usuario) {
+        this.id = id;
         this.usuario = usuario;
     }
 
@@ -16,14 +24,6 @@ public class Cliente {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     public Usuario getUsuario() {
