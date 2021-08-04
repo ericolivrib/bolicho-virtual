@@ -8,6 +8,21 @@ public class Produto {
     private String nome;
     private BigDecimal preco;
 
+    public Produto(int id, String nome, BigDecimal preco) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public Produto(String nome, BigDecimal preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public Produto(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

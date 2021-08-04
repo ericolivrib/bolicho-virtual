@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Usuario {
 
@@ -9,7 +9,7 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
-    private Date dataCadastro;
+    private LocalDate dataCadastro;
     private Endereco endereco;
 
     public Usuario(String nome, String email, String telefone, String senha, Endereco endereco) {
@@ -29,7 +29,7 @@ public class Usuario {
         this.endereco = endereco;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha, Date dataCadastro, Endereco endereco) {
+    public Usuario(int id, String nome, String email, String telefone, String senha, LocalDate dataCadastro, Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -88,11 +88,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Date getDataCadastro() {
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
+    public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 

@@ -8,8 +8,45 @@ public class Compra {
     private int id;
     private BigDecimal valor;
     private LocalDate dataPedido;
+    private String formaPagamento;
     private Cliente cliente;
     private Vendedor vendedor;
+
+    public Compra(int id, BigDecimal valor, LocalDate dataPedido, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+        this.id = id;
+        this.valor = valor;
+        this.dataPedido = dataPedido;
+        this.formaPagamento = formaPagamento;
+        this.cliente = cliente;
+        this.vendedor = vendedor;
+    }
+
+    public Compra(int id, BigDecimal valor, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+        this.id = id;
+        this.valor = valor;
+        this.formaPagamento = formaPagamento;
+        this.cliente = cliente;
+        this.vendedor = vendedor;
+    }
+
+    public Compra(BigDecimal valor, LocalDate dataPedido, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+        this.valor = valor;
+        this.dataPedido = dataPedido;
+        this.formaPagamento = formaPagamento;
+        this.cliente = cliente;
+        this.vendedor = vendedor;
+    }
+
+    public Compra(BigDecimal valor, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+        this.valor = valor;
+        this.formaPagamento = formaPagamento;
+        this.cliente = cliente;
+        this.vendedor = vendedor;
+    }
+
+    public Compra(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -25,6 +62,22 @@ public class Compra {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public LocalDate getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(LocalDate dataPedido) {
+        this.dataPedido = dataPedido;
+    }
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
     public Cliente getCliente() {

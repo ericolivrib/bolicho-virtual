@@ -34,7 +34,7 @@ public class UsuarioDao {
                     rs.getString("email"),
                     rs.getString("telefone"),
                     rs.getString("senha"),
-                    rs.getDate("data_cadastro"),
+                    rs.getDate("data_cadastro").toLocalDate(),
                     new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id"))
             );
 
@@ -62,7 +62,7 @@ public class UsuarioDao {
                     rs.getString("email"),
                     rs.getString("telefone"),
                     rs.getString("senha"),
-                    rs.getDate("data_cadastro"),
+                    rs.getDate("data_cadastro").toLocalDate(),
                     new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id"))
             );
         }
