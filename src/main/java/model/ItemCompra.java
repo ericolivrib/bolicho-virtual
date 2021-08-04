@@ -7,6 +7,23 @@ public class ItemCompra {
     private Produto produto;
     private Compra compra;
 
+    public ItemCompra(int id, int quantidade, Produto produto, Compra compra) {
+        this.id = id;
+        this.quantidade = quantidade;
+        this.produto = produto;
+        this.compra = compra;
+    }
+
+    public ItemCompra(int quantidade, Produto produto, Compra compra) {
+        this.quantidade = quantidade;
+        this.produto = produto;
+        this.compra = compra;
+    }
+
+    public ItemCompra(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

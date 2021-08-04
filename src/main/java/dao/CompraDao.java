@@ -1,8 +1,6 @@
 package dao;
 
 import model.Compra;
-import model.Vendedor;
-import sun.util.resources.cldr.mas.CalendarData_mas_KE;
 
 import java.sql.*;
 import java.util.ArrayList;
