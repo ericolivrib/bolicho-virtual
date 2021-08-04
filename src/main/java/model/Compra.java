@@ -11,37 +11,42 @@ public class Compra {
     private String formaPagamento;
     private Cliente cliente;
     private Vendedor vendedor;
+    private StatusCompra statusCompra;
 
-    public Compra(int id, BigDecimal valor, LocalDate dataPedido, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+    public Compra(int id, BigDecimal valor, LocalDate dataPedido, String formaPagamento, Cliente cliente, Vendedor vendedor, StatusCompra statusCompra) {
         this.id = id;
         this.valor = valor;
         this.dataPedido = dataPedido;
         this.formaPagamento = formaPagamento;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.statusCompra = statusCompra;
     }
 
-    public Compra(int id, BigDecimal valor, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+    public Compra(int id, BigDecimal valor, String formaPagamento, Cliente cliente, Vendedor vendedor, StatusCompra statusCompra) {
         this.id = id;
         this.valor = valor;
         this.formaPagamento = formaPagamento;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.statusCompra = statusCompra;
     }
 
-    public Compra(BigDecimal valor, LocalDate dataPedido, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+    public Compra(BigDecimal valor, LocalDate dataPedido, String formaPagamento, Cliente cliente, Vendedor vendedor, StatusCompra statusCompra) {
         this.valor = valor;
         this.dataPedido = dataPedido;
         this.formaPagamento = formaPagamento;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.statusCompra = statusCompra;
     }
 
-    public Compra(BigDecimal valor, String formaPagamento, Cliente cliente, Vendedor vendedor) {
+    public Compra(BigDecimal valor, String formaPagamento, Cliente cliente, Vendedor vendedor, StatusCompra statusCompra) {
         this.valor = valor;
         this.formaPagamento = formaPagamento;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.statusCompra = statusCompra;
     }
 
     public Compra(int id) {
@@ -95,4 +100,13 @@ public class Compra {
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
     }
+
+    public StatusCompra getStatus() {
+        return statusCompra;
+    }
+
+    public void setStatus(StatusCompra statusCompra) {
+        this.statusCompra = statusCompra;
+    }
+
 }

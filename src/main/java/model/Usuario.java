@@ -11,25 +11,28 @@ public class Usuario {
     private String senha;
     private LocalDate dataCadastro;
     private Endereco endereco;
+    private Permissao permissao;
 
-    public Usuario(String nome, String email, String telefone, String senha, Endereco endereco) {
+    public Usuario(String nome, String email, String telefone, String senha, Endereco endereco, Permissao permissao) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
         this.endereco = endereco;
+        this.permissao = permissao;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha, Endereco endereco) {
+    public Usuario(int id, String nome, String email, String telefone, String senha, Endereco endereco, Permissao permissao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
         this.endereco = endereco;
+        this.permissao = permissao;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha, LocalDate dataCadastro, Endereco endereco) {
+    public Usuario(int id, String nome, String email, String telefone, String senha, LocalDate dataCadastro, Endereco endereco, Permissao permissao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -37,11 +40,13 @@ public class Usuario {
         this.senha = senha;
         this.dataCadastro = dataCadastro;
         this.endereco = endereco;
+        this.permissao = permissao;
     }
 
-    public Usuario(int id, Endereco endereco) {
+    public Usuario(int id, Endereco endereco, Permissao permissao) {
         this.id = id;
         this.endereco = endereco;
+        this.permissao = permissao;
     }
 
     public Usuario(int id) {
@@ -102,5 +107,13 @@ public class Usuario {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Permissao getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(Permissao permissao) {
+        this.permissao = permissao;
     }
 }

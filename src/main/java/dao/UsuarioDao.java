@@ -1,5 +1,6 @@
 package dao;
 
+import model.Permissao;
 import model.Usuario;
 
 import java.sql.*;
@@ -22,7 +23,8 @@ public class UsuarioDao {
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
-        sql = "SELECT * FROM usuario";
+        sql = "SELECT * FROM usuario u, permissao p, usuario_permissao up " +
+                "WHERE u.id = up.usuario_id AND p.id = up.permissao_id";
 
         stmt = conexao.createStatement();
         rs = stmt.executeQuery(sql);
@@ -35,7 +37,8 @@ public class UsuarioDao {
                     rs.getString("telefone"),
                     rs.getString("senha"),
                     rs.getDate("data_cadastro").toLocalDate(),
-                    new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id"))
+                    new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id")),
+                    new Permissao(rs.getInt("id"), rs.getString("descricao"))
             );
 
             usuarios.add(usuario);
@@ -63,7 +66,8 @@ public class UsuarioDao {
                     rs.getString("telefone"),
                     rs.getString("senha"),
                     rs.getDate("data_cadastro").toLocalDate(),
-                    new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id"))
+                    new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id")),
+                    new Permissao(rs.getInt("id"), rs.getString("descricao"))
             );
         }
 
@@ -93,8 +97,18 @@ public class UsuarioDao {
 
             if (rs.getInt(1) > 0) {
                 usuario.setId(rs.getInt(1));
-                conexao.commit();
-                return "OK";
+
+                sql = "INSERT INTO usuario_permissao (usuario_id, permissao_id) VALUES (?, ?)";
+
+                ps = conexao.prepareStatement(sql);
+                ps.setInt(1, usuario.getId());
+                ps.setInt(2, usuario.getPermissao().getId());
+                ps.executeUpdate();
+
+                if (ps.getUpdateCount() > 0) {
+                    conexao.commit();
+                    return "OK";
+                }
             }
         }
 
@@ -132,18 +146,26 @@ public class UsuarioDao {
 
         conexao.setAutoCommit(false);
 
-        sql = "DELETE FROM usuario WHERE id = ?";
+        sql  = "DELETE FROM usuario_permissao WHERE usuario_id = ?";
 
         ps = conexao.prepareStatement(sql);
         ps.setInt(1, usuario.getId());
         ps.executeUpdate();
 
         if (ps.getUpdateCount() > 0) {
-            String retorno = new EnderecoDao(conexao).deletar(usuario.getEndereco());
+            sql = "DELETE FROM usuario WHERE id = ?";
 
-            if (retorno.equals("OK")) {
-                conexao.commit();
-                return "OK";
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, usuario.getId());
+            ps.executeUpdate();
+
+            if (ps.getUpdateCount() > 0) {
+                String retorno = new EnderecoDao(conexao).deletar(usuario.getEndereco());
+
+                if (retorno.equals("OK")) {
+                    conexao.commit();
+                    return "OK";
+                }
             }
         }
 
