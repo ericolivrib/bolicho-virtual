@@ -39,7 +39,7 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            System.out.println("[PRODUTO] Listando produtos...");
+            System.out.println("[PRODUTOS] Listando produtos...");
 
             Connection conexao = (Connection) req.getAttribute("conexao");
 
@@ -57,7 +57,7 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            System.out.println("[PRODUTO] Adicionando produto...");
+            System.out.println("[PRODUTOS] Adicionando produto...");
 
             String nome = req.getParameter("nome");
             BigDecimal preco = new BigDecimal(req.getParameter("preco"));
@@ -74,11 +74,11 @@ public class ProdutoController extends HttpServlet {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível adicionar o produto!");
             }
 
-            new ListarProdutos().executa(req, resp);
+//            new ListarProdutos().executa(req, resp);
 
             req.setAttribute("logica", "AdicionarProduto");
 
-            return "produtos.jsp";
+            return "produtos?logica=ListarProdutos";
         }
     }
 
@@ -87,7 +87,7 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            System.out.println("[PRODUTO] Selecionando produto para edição...");
+            System.out.println("[PRODUTOS] Selecionando produto para edição...");
 
             int id = Integer.parseInt(req.getParameter("id"));
 
@@ -107,7 +107,7 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            System.out.println("[PRODUTO] Atualizando produto...");
+            System.out.println("[PRODUTOS] Atualizando produto...");
 
             int id = Integer.parseInt(req.getParameter("id"));
             String nome = req.getParameter("nome");
@@ -125,11 +125,11 @@ public class ProdutoController extends HttpServlet {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível atualizar o produto!");
             }
 
-            new ListarProdutos().executa(req, resp);
+//            new ListarProdutos().executa(req, resp);
 
             req.setAttribute("logica", "AdicionarProduto");
 
-            return "produtos.jsp";
+            return "produtos?logica=ListarProdutos";
         }
     }
 
@@ -138,7 +138,7 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            System.out.println("[PRODUTO] Removendo produto...");
+            System.out.println("[PRODUTOS] Removendo produto...");
 
             int id = Integer.parseInt(req.getParameter("id"));
 
@@ -154,11 +154,11 @@ public class ProdutoController extends HttpServlet {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível remover o produto!");
             }
 
-            new ListarProdutos().executa(req, resp);
+//            new ListarProdutos().executa(req, resp);
 
             req.setAttribute("logica", "AdicionarProduto");
 
-            return "produtos.jsp";
+            return "produtos?logica=ListarProdutos";
         }
     }
 }

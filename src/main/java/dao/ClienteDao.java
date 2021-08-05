@@ -70,7 +70,6 @@ public class ClienteDao {
     public String inserir(Cliente cliente) {
 
         try {
-
             conexao.setAutoCommit(false);
 
             String retorno = new UsuarioDao(conexao).inserir(cliente.getUsuario());

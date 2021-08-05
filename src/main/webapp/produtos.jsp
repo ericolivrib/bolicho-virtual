@@ -25,8 +25,8 @@
 
         <input type="hidden" name="id" value="${produto.id}">
 
-        Nome: <input type="text" name="nome" value="${produto.nome}">
-        Preço: <input type="number" step="0.01" min="0" name="preco" value="${produto.preco}">
+        <input type="text" name="nome" value="${produto.nome}" required placeholder="Nome">
+        <input type="number" step="0.01" min="0" name="preco" value="${produto.preco}" required placeholder="Preço">
 
         <button type="submit" name="logica" value="${logica}">Confirmar</button>
 
@@ -55,8 +55,8 @@
                 <tr>
                     <td>${p.nome}</td>
                     <td>${p.preco}</td>
-                    <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=RemoverProduto&id=${p.id}">REMOVER</a></td>
                     <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=EditarProduto&id=${p.id}">EDITAR</a></td>
+                    <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=RemoverProduto&id=${p.id}">REMOVER</a></td>
                 </tr>
             </c:forEach>
             </tbody>

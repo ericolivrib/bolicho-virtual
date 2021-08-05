@@ -56,7 +56,8 @@ public class UsuarioDao {
         Usuario usuario = null;
 
         try {
-            sql = "SELECT * FROM usuario WHERE id = ?";
+            sql = "SELECT * FROM usuario u, permissao p, usuario_permissao up " +
+                    "WHERE u.id = up.usuario_id AND p.id = up.permissao_id AND u.id = ?";
 
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
