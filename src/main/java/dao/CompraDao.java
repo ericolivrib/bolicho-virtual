@@ -1,5 +1,6 @@
 package dao;
 
+import dao.connection.ConexaoBase;
 import model.Compra;
 
 import java.sql.*;
@@ -7,18 +8,21 @@ import java.util.ArrayList;
 
 public class CompraDao {
 
-    private String status;
     private String sql;
     private Statement stmt;
     private PreparedStatement ps;
     private ResultSet rs;
+    private Connection conexao;
+
+    public CompraDao(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     public ArrayList<Compra> selecionar() {
 
         ArrayList<Compra> compras = new ArrayList<>();
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM compra";
 
             stmt = conexao.createStatement();
@@ -30,8 +34,8 @@ public class CompraDao {
                         rs.getBigDecimal("valor"),
                         rs.getDate("data_pedido").toLocalDate(),
                         rs.getString("forma_pagamento"),
-                        new ClienteDao().selecionar(rs.getInt("cliente_id")),
-                        new VendedorDao().selecionar(rs.getInt("vendedor_id")),
+                        new ClienteDao(conexao).selecionar(rs.getInt("cliente_id")),
+                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id")),
                         new StatusCompraDao(conexao).selecionar(rs.getInt("status_id"))
                 );
 
@@ -48,8 +52,7 @@ public class CompraDao {
 
         Compra compra = null;
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM compra WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
@@ -62,8 +65,8 @@ public class CompraDao {
                         rs.getBigDecimal("valor"),
                         rs.getDate("data_pedido").toLocalDate(),
                         rs.getString("forma_pagamento"),
-                        new ClienteDao().selecionar(rs.getInt("cliente_id")),
-                        new VendedorDao().selecionar(rs.getInt("vendedor_id")),
+                        new ClienteDao(conexao).selecionar(rs.getInt("cliente_id")),
+                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id")),
                         new StatusCompraDao(conexao).selecionar(rs.getInt("status_id"))
                 );
             }
@@ -76,8 +79,7 @@ public class CompraDao {
 
     public String inserir(Compra compra) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             String retorno = new StatusCompraDao(conexao).inserir(compra.getStatus());
@@ -109,8 +111,7 @@ public class CompraDao {
 
     public String atualizar(Compra compra) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             String retorno = new StatusCompraDao(conexao).atualizar(compra.getStatus());

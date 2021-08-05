@@ -1,5 +1,6 @@
 package dao;
 
+import dao.connection.ConexaoBase;
 import model.Produto;
 
 import java.sql.*;
@@ -12,13 +13,17 @@ public class ProdutoDao {
     private Statement stmt;
     private PreparedStatement ps;
     private ResultSet rs;
+    private Connection conexao;
+
+    public ProdutoDao(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     public ArrayList<Produto> selecionar() {
 
         ArrayList<Produto> produtos = new ArrayList<>();
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM produto";
 
             stmt = conexao.createStatement();
@@ -44,8 +49,7 @@ public class ProdutoDao {
 
         Produto produto = null;
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM produto WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
@@ -68,8 +72,7 @@ public class ProdutoDao {
 
     public String inserir(Produto produto) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "INSERT INTO produto (nome, preco) VALUES (?, ?)";
@@ -81,20 +84,18 @@ public class ProdutoDao {
 
             if (ps.getUpdateCount() > 0) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String atualizar(Produto produto) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "UPDATE produto SET nome = ?, preco = ? WHERE id = ?";
@@ -120,8 +121,7 @@ public class ProdutoDao {
 
     public String deletar(Produto produto) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "DELETE FROM produto WHERE id = ?";

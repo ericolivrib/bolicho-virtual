@@ -1,5 +1,6 @@
 package dao;
 
+import dao.connection.ConexaoBase;
 import model.Vendedor;
 
 import java.sql.*;
@@ -7,18 +8,21 @@ import java.util.ArrayList;
 
 public class VendedorDao {
 
-    private String status;
     private String sql;
     private Statement stmt;
     private PreparedStatement ps;
     private ResultSet rs;
+    private Connection conexao;
+
+    public VendedorDao(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     public ArrayList<Vendedor> selecionar() {
 
         ArrayList<Vendedor> vendedores = new ArrayList<>();
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM vendedor";
 
             stmt = conexao.createStatement();
@@ -43,8 +47,7 @@ public class VendedorDao {
 
         Vendedor vendedor = null;
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM vendedor WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
@@ -66,8 +69,7 @@ public class VendedorDao {
 
     public String inserir(Vendedor vendedor) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             String retorno = new UsuarioDao(conexao).inserir(vendedor.getUsuario());
@@ -81,41 +83,39 @@ public class VendedorDao {
 
                 if (ps.getUpdateCount() > 0) {
                     conexao.commit();
-                    status = "OK";
+                    return "OK";
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String atualizar(Vendedor vendedor) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             String retorno = new UsuarioDao(conexao).atualizar(vendedor.getUsuario());
 
             if (retorno.equals("OK")) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String deletar(Vendedor vendedor) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "DELETE FROM vendedor WHERE id = ?";
@@ -129,14 +129,14 @@ public class VendedorDao {
 
                 if (retorno.equals("OK")) {
                     conexao.commit();
-                    status = "OK";
+                    return "OK";
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 }

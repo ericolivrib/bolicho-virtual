@@ -1,5 +1,6 @@
 package dao;
 
+import dao.connection.ConexaoBase;
 import model.ItemCompra;
 
 import java.sql.*;
@@ -7,18 +8,21 @@ import java.util.ArrayList;
 
 public class ItemCompraDao {
 
-    private String status;
     private String sql;
     private Statement stmt;
     private PreparedStatement ps;
     private ResultSet rs;
+    private Connection conexao;
+
+    public ItemCompraDao(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     public ArrayList<ItemCompra> selecionar() {
 
         ArrayList<ItemCompra> itensCompra = new ArrayList<>();
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM item_compra";
 
             stmt = conexao.createStatement();
@@ -28,8 +32,8 @@ public class ItemCompraDao {
                 ItemCompra itemCompra = new ItemCompra(
                         rs.getInt("id"),
                         rs.getInt("quantidade"),
-                        new ProdutoDao().selecionar(rs.getInt("produto_id")),
-                        new CompraDao().selecionar(rs.getInt("compra_id"))
+                        new ProdutoDao(conexao).selecionar(rs.getInt("produto_id")),
+                        new CompraDao(conexao).selecionar(rs.getInt("compra_id"))
                 );
 
                 itensCompra.add(itemCompra);
@@ -45,8 +49,7 @@ public class ItemCompraDao {
 
         ItemCompra itemCompra = null;
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM item_compra WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
@@ -57,8 +60,8 @@ public class ItemCompraDao {
                 itemCompra = new ItemCompra(
                         rs.getInt("id"),
                         rs.getInt("quantidade"),
-                        new ProdutoDao().selecionar(rs.getInt("produto_id")),
-                        new CompraDao().selecionar(rs.getInt("compra_id"))
+                        new ProdutoDao(conexao).selecionar(rs.getInt("produto_id")),
+                        new CompraDao(conexao).selecionar(rs.getInt("compra_id"))
                 );
             }
         } catch (SQLException e) {
@@ -70,8 +73,7 @@ public class ItemCompraDao {
 
     public String inserir(ItemCompra itemCompra) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "INSERT INTO item_compra (quantidade, produto_id, compra_id) VALUES (?, ?, ?)";
@@ -84,20 +86,19 @@ public class ItemCompraDao {
 
             if (ps.getUpdateCount() > 0) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String deletar(ItemCompra itemCompra) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "DELETE FROM item_compra WHERE id = ?";
@@ -108,13 +109,13 @@ public class ItemCompraDao {
 
             if (ps.getUpdateCount() > 0) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 }

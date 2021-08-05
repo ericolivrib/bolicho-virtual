@@ -1,5 +1,6 @@
 package dao;
 
+import dao.connection.ConexaoBase;
 import model.Cliente;
 
 import java.sql.*;
@@ -7,18 +8,21 @@ import java.util.ArrayList;
 
 public class ClienteDao {
 
-    private String status;
     private String sql;
     private Statement stmt;
     private PreparedStatement ps;
     private ResultSet rs;
+    private Connection conexao;
+
+    public ClienteDao(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     public ArrayList<Cliente> selecionar() {
 
         ArrayList<Cliente> clientes = new ArrayList<>();
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM cliente";
 
             stmt = conexao.createStatement();
@@ -40,10 +44,10 @@ public class ClienteDao {
     }
 
     public Cliente selecionar(int id) {
+
         Cliente cliente = null;
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             sql = "SELECT * FROM cliente WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
@@ -65,7 +69,7 @@ public class ClienteDao {
 
     public String inserir(Cliente cliente) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
+        try {
 
             conexao.setAutoCommit(false);
 
@@ -80,41 +84,39 @@ public class ClienteDao {
 
                 if (ps.getUpdateCount() > 0) {
                     conexao.commit();
-                    status = "OK";
+                    return "OK";
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String atualizar(Cliente cliente) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             String retorno = new UsuarioDao(conexao).atualizar(cliente.getUsuario());
 
             if (retorno.equals("OK")) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String deletar(Cliente cliente) {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
             conexao.setAutoCommit(false);
 
             sql = "DELETE FROM cliente WHERE id = ?";
@@ -128,14 +130,14 @@ public class ClienteDao {
 
                 if (retorno.equals("OK")) {
                     conexao.commit();
-                    status = "OK";
+                    return "OK";
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
+            return "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 }

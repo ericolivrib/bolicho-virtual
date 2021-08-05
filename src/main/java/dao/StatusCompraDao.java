@@ -16,60 +16,77 @@ public class StatusCompraDao {
         this.conexao = conexao;
     }
 
-    public StatusCompra selecionar(int id) throws SQLException {
+    public StatusCompra selecionar(int id) {
 
         StatusCompra statusCompra = null;
 
-        sql = "SELECT * FROM status_compra WHERE id = ?";
+        try {
+            sql = "SELECT * FROM status_compra WHERE id = ?";
 
-        ps = conexao.prepareStatement(sql);
-        ps.setInt(1, id);
-        rs = ps.executeQuery();
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
 
-        if (rs.next()) {
-            statusCompra = new StatusCompra(
-                    rs.getInt("id"),
-                    rs.getString("descricao"),
-                    rs.getDate("data_status").toLocalDate(),
-                    rs.getString("motivo")
-            );
+            if (rs.next()) {
+                statusCompra = new StatusCompra(
+                        rs.getInt("id"),
+                        rs.getString("descricao"),
+                        rs.getDate("data_status").toLocalDate(),
+                        rs.getString("motivo")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return statusCompra;
     }
 
-    public String inserir(StatusCompra statusCompra) throws SQLException {
+    public String inserir(StatusCompra statusCompra) {
 
-        conexao.setAutoCommit(false);
+        try {
+            conexao.setAutoCommit(false);
 
-        sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
+            sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
 
-        ps = conexao.prepareStatement(sql);
-        ps.setString(1, statusCompra.getDescricao());
-        ps.setString(2, statusCompra.getMotivo());
-        ps.executeUpdate();
+            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, statusCompra.getDescricao());
+            ps.setString(2, statusCompra.getMotivo());
+            ps.execute();
+            rs = ps.getGeneratedKeys();
+            rs.next();
 
-        if (ps.getUpdateCount() > 0) {
-            conexao.commit();
-            return "OK";
+            if (rs.getInt(1) > 0) {
+                statusCompra.setId(rs.getInt(1));
+                conexao.commit();
+                return "OK";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Erro";
         }
 
         return "Erro";
     }
 
-    public String atualizar(StatusCompra statusCompra) throws SQLException {
+    public String atualizar(StatusCompra statusCompra) {
 
-        sql = "UPDATE status_compra SET descricao = ?, motivo = ? WHERE id = ?";
+        try {
+            sql = "UPDATE status_compra SET descricao = ?, motivo = ? WHERE id = ?";
 
-        ps = conexao.prepareStatement(sql);
-        ps.setString(1, statusCompra.getDescricao());
-        ps.setString(2, statusCompra.getMotivo());
-        ps.setInt(3, statusCompra.getId());
-        ps.executeUpdate();
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, statusCompra.getDescricao());
+            ps.setString(2, statusCompra.getMotivo());
+            ps.setInt(3, statusCompra.getId());
+            ps.executeUpdate();
 
-        if (ps.getUpdateCount() > 0) {
-            conexao.commit();;
-            return "OK";
+            if (ps.getUpdateCount() > 0) {
+                conexao.commit();;
+                return "OK";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Erro";
         }
 
         return "Erro";
