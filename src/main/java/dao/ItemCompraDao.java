@@ -1,6 +1,5 @@
 package dao;
 
-import dao.connection.ConexaoBase;
 import model.ItemCompra;
 
 import java.sql.*;
