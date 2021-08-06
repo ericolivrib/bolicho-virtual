@@ -15,8 +15,8 @@ public class IndexController extends HttpServlet {
 
         System.out.println("Redirecionando para a página inicial...");
 
-        req.setAttribute("logica", "CadastrarCliente");
+        req.setAttribute("logica", "CadastrarVendedor");
 
-        req.getRequestDispatcher("clientes?logica=ListarClientes").forward(req, resp);
+        req.getRequestDispatcher("vendedores?logica=ListarVendedores").forward(req, resp);
     }
 }
