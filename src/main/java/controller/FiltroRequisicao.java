@@ -13,13 +13,14 @@ import java.sql.SQLException;
 public class FiltroRequisicao implements Filter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
-        try (Connection conexao = new ConexaoBase().getConexao()) {
-
+        try {
+            Connection conexao = new ConexaoBase().getConexao();
             request.setAttribute("conexao", conexao);
             chain.doFilter(request, response);
-
+            conexao.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

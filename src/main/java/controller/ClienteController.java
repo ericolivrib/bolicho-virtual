@@ -15,11 +15,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-@WebServlet("/clientes")
+@WebServlet("clientes")
 public class ClienteController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         String parametro = req.getParameter("logica");
         String nomeClasse = "controller.ClienteController$" + parametro;
@@ -39,7 +40,8 @@ public class ClienteController extends HttpServlet {
     public static class ListarClientes implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[CLIENTES] Listando clientes...");
 
@@ -58,7 +60,8 @@ public class ClienteController extends HttpServlet {
     public static class CadastrarCliente implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[CLIENTES] Cadastrando cliente...");
 
@@ -95,7 +98,8 @@ public class ClienteController extends HttpServlet {
     public static class EditarCliente implements  LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[CLIENTES] Selecionando cliente para edição...");
 
@@ -116,7 +120,8 @@ public class ClienteController extends HttpServlet {
     public static class AtualizarCliente implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[CLIENTES] Atualizando cliente...");
 
@@ -158,7 +163,8 @@ public class ClienteController extends HttpServlet {
     public static class RemoverCliente implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[CLIENTES] Removendo cliente");
 

@@ -7,5 +7,6 @@ import java.io.IOException;
 
 public interface LogicaNegocio {
 
-    String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
+    String executa(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException;
 }

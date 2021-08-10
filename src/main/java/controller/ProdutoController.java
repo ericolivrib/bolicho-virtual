@@ -13,11 +13,12 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-@WebServlet("/produtos")
+@WebServlet("produtos")
 public class ProdutoController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         String parametro = req.getParameter("logica");
         String nomeClasse = "controller.ProdutoController$" + parametro;
@@ -37,7 +38,8 @@ public class ProdutoController extends HttpServlet {
     public static class ListarProdutos implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[PRODUTOS] Listando produtos...");
 
@@ -55,7 +57,8 @@ public class ProdutoController extends HttpServlet {
     public static class AdicionarProduto implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[PRODUTOS] Adicionando produto...");
 
@@ -85,7 +88,8 @@ public class ProdutoController extends HttpServlet {
     public static class EditarProduto implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[PRODUTOS] Selecionando produto para edição...");
 
@@ -105,7 +109,8 @@ public class ProdutoController extends HttpServlet {
     public static class AtualizarProduto implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[PRODUTOS] Atualizando produto...");
 
@@ -136,7 +141,8 @@ public class ProdutoController extends HttpServlet {
     public static class RemoverProduto implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[PRODUTOS] Removendo produto...");
 

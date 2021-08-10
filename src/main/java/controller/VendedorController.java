@@ -15,11 +15,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-@WebServlet("/vendedores")
+@WebServlet("vendedores")
 public class VendedorController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         String parametro = req.getParameter("logica");
         String nomeClasse = "controller.VendedorController$" + parametro;
@@ -39,7 +40,8 @@ public class VendedorController extends HttpServlet {
     public static class ListarVendedores implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[VENDEDORES] Listando vendedores...");
 
@@ -58,7 +60,8 @@ public class VendedorController extends HttpServlet {
     public static class CadastrarVendedor implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[VENDEDORES] Cadastrando vendedor...");
 
@@ -95,7 +98,8 @@ public class VendedorController extends HttpServlet {
     public static class EditarVendedor implements  LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[VENDEDORES] Selecionando vendedor para edição...");
 
@@ -116,7 +120,8 @@ public class VendedorController extends HttpServlet {
     public static class AtualizarVendedor implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[VENDEDORES] Atualizando vendedor...");
 
@@ -158,7 +163,8 @@ public class VendedorController extends HttpServlet {
     public static class RemoverVendedor implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[VENDEDORES] Removendo vendedor");
 
