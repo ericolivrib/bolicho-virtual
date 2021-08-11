@@ -19,6 +19,10 @@
     </header>
 
     <section>
+        <c:if test="${not empty retorno}">
+            <p>${retorno}</p>
+        </c:if>
+
         <form>
             <input type="text" name="pesquisar" placeholder="Pesquisar...">
         </form>
@@ -37,7 +41,7 @@
                         <td>${p.nome}</td>
                         <td>R$ ${p.preco}</td>
                         <td>
-                            <a href="http://localhost:8080/bolicho-virtual/comprar?logica=Comprar&produto=${p.id}">
+                            <a href="http://localhost:8080/bolicho-virtual/comprar?logica=Comprar&p=${p.id}">
                                 <button type="button">Comprar</button></a>
                         </td>
                     </tr>

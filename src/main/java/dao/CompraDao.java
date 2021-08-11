@@ -32,10 +32,8 @@ public class CompraDao {
                         rs.getInt("id"),
                         rs.getBigDecimal("valor"),
                         rs.getDate("data_pedido").toLocalDate(),
-                        rs.getString("forma_pagamento"),
                         new ClienteDao(conexao).selecionar(rs.getInt("cliente_id")),
-                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id")),
-                        new StatusCompraDao(conexao).selecionar(rs.getInt("status_id"))
+                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id"))
                 );
 
                 compras.add(compra);
@@ -63,10 +61,8 @@ public class CompraDao {
                         rs.getInt("id"),
                         rs.getBigDecimal("valor"),
                         rs.getDate("data_pedido").toLocalDate(),
-                        rs.getString("forma_pagamento"),
                         new ClienteDao(conexao).selecionar(rs.getInt("cliente_id")),
-                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id")),
-                        new StatusCompraDao(conexao).selecionar(rs.getInt("status_id"))
+                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id"))
                 );
             }
         } catch (SQLException e) {
@@ -81,41 +77,19 @@ public class CompraDao {
         try {
             conexao.setAutoCommit(false);
 
-            String retorno = new StatusCompraDao(conexao).inserir(compra.getStatus());
+            sql = "INSERT INTO compra (valor, data_pedido, cliente_id, vendedor_id) " +
+                    "VALUES (?, CURRENT_DATE, ?, ?)";
 
-            if (retorno.equals("OK")) {
-                sql = "INSERT INTO compra (valor, data_pedido, forma_pagamento, cliente_id, vendedor_id, status_id) " +
-                        "VALUES (?, CURRENT_DATE, ?, ?, ?, ?)";
+            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setBigDecimal(1, compra.getValor());
+            ps.setInt(2, compra.getCliente().getId());
+            ps.setInt(3, compra.getVendedor().getId());
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            rs.next();
 
-                ps = conexao.prepareStatement(sql);
-                ps.setBigDecimal(1, compra.getValor());
-                ps.setString(2, compra.getFormaPagamento());
-                ps.setInt(3, compra.getCliente().getId());
-                ps.setInt(4, compra.getVendedor().getId());
-                ps.setInt(5, compra.getStatus().getId());
-                ps.executeUpdate();
-
-                if (ps.getUpdateCount() > 0) {
-                    conexao.commit();
-                    return "OK";
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "Erro";
-        }
-
-        return "Erro";
-    }
-
-    public String atualizar(Compra compra) {
-
-        try {
-            conexao.setAutoCommit(false);
-
-            String retorno = new StatusCompraDao(conexao).atualizar(compra.getStatus());
-
-            if (retorno.equals("OK")) {
+            if (rs.getInt(1) > 0) {
+                compra.setId(rs.getInt(1));
                 conexao.commit();
                 return "OK";
             }

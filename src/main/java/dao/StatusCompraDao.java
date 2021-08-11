@@ -32,7 +32,8 @@ public class StatusCompraDao {
                         rs.getInt("id"),
                         rs.getString("descricao"),
                         rs.getDate("data_status").toLocalDate(),
-                        rs.getString("motivo")
+                        rs.getString("motivo"),
+                        new CompraDao(conexao).selecionar(rs.getInt("compra_id"))
                 );
             }
         } catch (SQLException e) {
@@ -47,11 +48,12 @@ public class StatusCompraDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
+            sql = "INSERT INTO status_compra (descricao, data_status, motivo, compra_id) VALUES (?, CURRENT_DATE, ?, ?)";
 
             ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, statusCompra.getDescricao());
             ps.setString(2, statusCompra.getMotivo());
+            ps.setInt(3, statusCompra.getCompra().getId());
             ps.execute();
             rs = ps.getGeneratedKeys();
             rs.next();
