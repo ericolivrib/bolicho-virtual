@@ -7,7 +7,7 @@ Sistema web de venda de produtos coloniais e artesanais.
 - [x] Tabelas do banco 
 - [x] Conexão com a base de dados
 - [x] DAO
-- [ ] Controller
+- [x] Controller
 - [ ] View
-- [ ] Tratamento de requisições
+- [x] Tratamento de requisições
 - [ ] Classes e implementação de _login_
