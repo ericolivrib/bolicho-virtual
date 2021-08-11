@@ -49,6 +49,11 @@ public class Compra {
         this.status = status;
     }
 
+    public Compra(int id, StatusCompra status) {
+        this.id = id;
+        this.status = status;
+    }
+
     public Compra(int id) {
         this.id = id;
     }

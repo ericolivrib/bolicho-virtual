@@ -25,7 +25,7 @@
         <p><strong>Detalhes do produto</strong></p>
         <p>${produto.detalhes}</p>
 
-        <form action="comprar" method="POST">
+        <form action="compras" method="POST">
 
             <input type="hidden" name="p" value="${param.p}">
 

@@ -41,7 +41,7 @@
                         <td>${p.nome}</td>
                         <td>R$ ${p.preco}</td>
                         <td>
-                            <a href="http://localhost:8080/bolicho-virtual/comprar?logica=Comprar&p=${p.id}">
+                            <a href="http://localhost:8080/bolicho-virtual/compras?logica=Comprar&p=${p.id}">
                                 <button type="button">Comprar</button></a>
                         </td>
                     </tr>
@@ -61,9 +61,30 @@
                     <th>Data</th>
                     <th>Quantidade</th>
                     <th>Valor total</th>
+                    <th colspan="2">Alterar Status</th>
                 </tr>
             </thead>
             <tbody>
+                <c:forEach var="c" items="${compras}">
+                    <c:choose>
+                        <c:when test="${c.status.descricao == 'CONCLUÍDO'}">
+                            <tr style="background-color: #1F681F">
+                        </c:when>
+                        <c:when test="${c.status.descricao == 'CANCELADO'}">
+                            <tr style="background-color: #FF0000">
+                        </c:when>
+                    </c:choose>
+                        <td>${c.id}</td>
+                        <td>${c.item.produto.nome}</td>
+                        <td>${c.cliente.usuario.nome}</td>
+                        <td>${c.vendedor.usuario.nome}</td>
+                        <td>${c.dataPedido}</td>
+                        <td>${c.item.quantidade}</td>
+                        <td>${c.valor}</td>
+                        <td><a href="http://localhost:8080/bolicho-virtual/compras?logica=ConcluirCompra&id=${c.id}&s=${c.status.id}"><button type="button">Concluir</button></a></td>
+                        <td><a href="http://localhost:8080/bolicho-virtual/compras?logica=CancelarCompra&id=${c.id}&s=${c.status.id}"><button type="button">Cancelar</button></a></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </section>

@@ -115,4 +115,21 @@ public class CompraDao {
 
         return "Erro";
     }
+
+    public String atualizar(Compra compra) {
+
+        try {
+            conexao.setAutoCommit(false);
+            String retorno = new StatusCompraDao(conexao).atualizar(compra.getStatus());
+
+            if (retorno.equals("OK")) {
+                conexao.commit();
+                return "OK";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Erro";
+    }
 }
