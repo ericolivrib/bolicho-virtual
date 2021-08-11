@@ -1,6 +1,9 @@
 package controller;
 
+import dao.CompraDao;
+import dao.ItemCompraDao;
 import dao.ProdutoDao;
+import dao.StatusCompraDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +21,12 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
 
         System.out.println("Redirecionando para a página inicial...");
+
         Connection conexao = (Connection) req.getAttribute("conexao");
+
         req.setAttribute("produtos", new ProdutoDao(conexao).selecionar());
+        req.setAttribute("compras", new CompraDao(conexao).selecionar());
+
         req.getRequestDispatcher("principal.jsp").forward(req, resp);
     }
 }

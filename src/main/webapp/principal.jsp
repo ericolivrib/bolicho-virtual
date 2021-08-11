@@ -48,10 +48,28 @@
                 </c:forEach>
             </tbody>
         </table>
+
+        <h2>Vendas recentes</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Produto</th>
+                    <th>Cliente</th>
+                    <th>Vendedor</th>
+                    <th>Data</th>
+                    <th>Quantidade</th>
+                    <th>Valor total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </section>
 
     <footer>
-
+        <%-- Preencher mais tarde --%>
     </footer>
 </body>
 </html>

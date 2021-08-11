@@ -72,6 +72,8 @@ public class CompraController extends HttpServlet {
             int v = Integer.parseInt(req.getParameter("vendedor"));
             int quantidade = Integer.parseInt(req.getParameter("quantidade"));
 
+            System.out.println(quantidade);
+
             Connection conexao = (Connection) req.getAttribute("conexao");
 
             Produto produto = new ProdutoDao(conexao).selecionar(p);
@@ -81,16 +83,13 @@ public class CompraController extends HttpServlet {
             // valor da compra
             BigDecimal valor = produto.getPreco().multiply(BigDecimal.valueOf(quantidade));
 
-            Compra compra = new Compra(valor, cliente, vendedor);
-            String r1 = new CompraDao(conexao).inserir(compra);
+            StatusCompra status = new StatusCompra("PENDENTE", null);
+            ItemCompra item = new ItemCompra(quantidade, produto);
+            Compra compra = new Compra(valor, cliente, vendedor, item, status);
 
-            StatusCompra status = new StatusCompra("PENDENTE", null, compra);
-            String r2 = new StatusCompraDao(conexao).inserir(status);
+            String retorno = new CompraDao(conexao).inserir(compra);
 
-            ItemCompra item = new ItemCompra(quantidade, produto, compra);
-            String r3 = new ItemCompraDao(conexao).inserir(item);
-
-            if (r1.equals("OK") && r2.equals("OK") && r3.equals("OK")) {
+            if (retorno.equals("OK")) {
                 req.setAttribute("retorno", "<strong>OK!</strong> Compra efetuada com sucesso!");
             } else {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Ocorreram erros ao efetuar a compra.");

@@ -1,6 +1,7 @@
 package dao;
 
 import model.Compra;
+import model.ItemCompra;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ public class CompraDao {
                         rs.getBigDecimal("valor"),
                         rs.getDate("data_pedido").toLocalDate(),
                         new ClienteDao(conexao).selecionar(rs.getInt("cliente_id")),
-                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id"))
+                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id")),
+                        new ItemCompraDao(conexao).selecionar(rs.getInt("item_id")),
+                        new StatusCompraDao(conexao).selecionar(rs.getInt("status_id"))
                 );
 
                 compras.add(compra);
@@ -62,7 +65,9 @@ public class CompraDao {
                         rs.getBigDecimal("valor"),
                         rs.getDate("data_pedido").toLocalDate(),
                         new ClienteDao(conexao).selecionar(rs.getInt("cliente_id")),
-                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id"))
+                        new VendedorDao(conexao).selecionar(rs.getInt("vendedor_id")),
+                        new ItemCompraDao(conexao).selecionar(rs.getInt("item_id")),
+                        new StatusCompraDao(conexao).selecionar(rs.getInt("status_id"))
                 );
             }
         } catch (SQLException e) {
@@ -74,28 +79,38 @@ public class CompraDao {
 
     public String inserir(Compra compra) {
 
-        try {
-            conexao.setAutoCommit(false);
+        String retorno = new ItemCompraDao(conexao).inserir(compra.getItem());
 
-            sql = "INSERT INTO compra (valor, data_pedido, cliente_id, vendedor_id) " +
-                    "VALUES (?, CURRENT_DATE, ?, ?)";
+        if (retorno.equals("OK")) {
+            retorno = new StatusCompraDao(conexao).inserir(compra.getStatus());
 
-            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setBigDecimal(1, compra.getValor());
-            ps.setInt(2, compra.getCliente().getId());
-            ps.setInt(3, compra.getVendedor().getId());
-            ps.executeUpdate();
-            rs = ps.getGeneratedKeys();
-            rs.next();
+            if (retorno.equals("OK")) {
+                try {
+                    conexao.setAutoCommit(false);
 
-            if (rs.getInt(1) > 0) {
-                compra.setId(rs.getInt(1));
-                conexao.commit();
-                return "OK";
+                    sql = "INSERT INTO compra (valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) " +
+                            "VALUES (?, CURRENT_DATE, ?, ?, ?, ?)";
+
+                    ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                    ps.setBigDecimal(1, compra.getValor());
+                    ps.setInt(2, compra.getCliente().getId());
+                    ps.setInt(3, compra.getVendedor().getId());
+                    ps.setInt(4, compra.getItem().getId());
+                    ps.setInt(5, compra.getStatus().getId());
+                    ps.executeUpdate();
+                    rs = ps.getGeneratedKeys();
+                    rs.next();
+
+                    if (rs.getInt(1) > 0) {
+                        compra.setId(rs.getInt(1));
+                        conexao.commit();
+                        return "OK";
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return "Erro";
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";

@@ -3,6 +3,7 @@ package dao;
 import model.StatusCompra;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class StatusCompraDao {
 
@@ -14,6 +15,33 @@ public class StatusCompraDao {
 
     public StatusCompraDao(Connection conexao) {
         this.conexao = conexao;
+    }
+
+    public ArrayList<StatusCompra> selecionar() {
+
+        ArrayList<StatusCompra> statusCompras = new ArrayList<>();
+
+        try {
+            sql = "SELECT * FROM status_compra";
+
+            stmt = conexao.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                StatusCompra status = new StatusCompra(
+                        rs.getInt("id"),
+                        rs.getString("descricao"),
+                        rs.getDate("data_status").toLocalDate(),
+                        rs.getString("motivo")
+                );
+
+                statusCompras.add(status);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return statusCompras;
     }
 
     public StatusCompra selecionar(int id) {
@@ -32,8 +60,7 @@ public class StatusCompraDao {
                         rs.getInt("id"),
                         rs.getString("descricao"),
                         rs.getDate("data_status").toLocalDate(),
-                        rs.getString("motivo"),
-                        new CompraDao(conexao).selecionar(rs.getInt("compra_id"))
+                        rs.getString("motivo")
                 );
             }
         } catch (SQLException e) {
@@ -48,12 +75,11 @@ public class StatusCompraDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO status_compra (descricao, data_status, motivo, compra_id) VALUES (?, CURRENT_DATE, ?, ?)";
+            sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
 
             ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, statusCompra.getDescricao());
             ps.setString(2, statusCompra.getMotivo());
-            ps.setInt(3, statusCompra.getCompra().getId());
             ps.execute();
             rs = ps.getGeneratedKeys();
             rs.next();
@@ -83,7 +109,7 @@ public class StatusCompraDao {
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
-                conexao.commit();;
+                conexao.commit();
                 return "OK";
             }
         } catch (SQLException e) {

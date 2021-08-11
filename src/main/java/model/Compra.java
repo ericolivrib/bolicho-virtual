@@ -13,32 +13,40 @@ public class Compra {
     private ItemCompra item;
     private StatusCompra status;
 
-    public Compra(int id, BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor) {
+    public Compra(int id, BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
         this.id = id;
         this.valor = valor;
         this.dataPedido = dataPedido;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.item = item;
+        this.status = status;
     }
 
-    public Compra(int id, BigDecimal valor, Cliente cliente, Vendedor vendedor) {
+    public Compra(int id, BigDecimal valor, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
         this.id = id;
         this.valor = valor;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.item = item;
+        this.status = status;
     }
 
-    public Compra(BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor) {
+    public Compra(BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
         this.valor = valor;
         this.dataPedido = dataPedido;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.item = item;
+        this.status = status;
     }
 
-    public Compra(BigDecimal valor, Cliente cliente, Vendedor vendedor) {
+    public Compra(BigDecimal valor, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
         this.valor = valor;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.item = item;
+        this.status = status;
     }
 
     public Compra(int id) {
@@ -83,5 +91,21 @@ public class Compra {
 
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public ItemCompra getItem() {
+        return item;
+    }
+
+    public void setItem(ItemCompra item) {
+        this.item = item;
+    }
+
+    public StatusCompra getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusCompra status) {
+        this.status = status;
     }
 }

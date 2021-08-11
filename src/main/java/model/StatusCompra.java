@@ -8,27 +8,23 @@ public class StatusCompra {
     private String descricao;
     private LocalDate data;
     private String motivo;
-    private Compra compra;
 
-    public StatusCompra(int id, String descricao, LocalDate data, String motivo, Compra compra) {
+    public StatusCompra(int id, String descricao, LocalDate data, String motivo) {
         this.id = id;
         this.descricao = descricao;
         this.data = data;
         this.motivo = motivo;
-        this.compra = compra;
     }
 
-    public StatusCompra(String descricao, String motivo, Compra compra) {
+    public StatusCompra(String descricao, String motivo) {
         this.descricao = descricao;
         this.motivo = motivo;
-        this.compra = compra;
     }
 
-    public StatusCompra(int id, String descricao, String motivo, Compra compra) {
+    public StatusCompra(int id, String descricao, String motivo) {
         this.id = id;
         this.descricao = descricao;
         this.motivo = motivo;
-        this.compra = compra;
     }
 
     public StatusCompra(int id) {
@@ -65,13 +61,5 @@ public class StatusCompra {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
-    }
-
-    public Compra getCompra() {
-        return compra;
-    }
-
-    public void setCompra(Compra compra) {
-        this.compra = compra;
     }
 }

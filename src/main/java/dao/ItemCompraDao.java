@@ -31,8 +31,7 @@ public class ItemCompraDao {
                 ItemCompra itemCompra = new ItemCompra(
                         rs.getInt("id"),
                         rs.getInt("quantidade"),
-                        new ProdutoDao(conexao).selecionar(rs.getInt("produto_id")),
-                        new CompraDao(conexao).selecionar(rs.getInt("compra_id"))
+                        new ProdutoDao(conexao).selecionar(rs.getInt("produto_id"))
                 );
 
                 itensCompra.add(itemCompra);
@@ -59,8 +58,7 @@ public class ItemCompraDao {
                 itemCompra = new ItemCompra(
                         rs.getInt("id"),
                         rs.getInt("quantidade"),
-                        new ProdutoDao(conexao).selecionar(rs.getInt("produto_id")),
-                        new CompraDao(conexao).selecionar(rs.getInt("compra_id"))
+                        new ProdutoDao(conexao).selecionar(rs.getInt("produto_id"))
                 );
             }
         } catch (SQLException e) {
@@ -75,15 +73,17 @@ public class ItemCompraDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO item_compra (quantidade, produto_id, compra_id) VALUES (?, ?, ?)";
+            sql = "INSERT INTO item_compra (quantidade, produto_id) VALUES (?, ?)";
 
-            ps = conexao.prepareStatement(sql);
+            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, itemCompra.getQuantidade());
             ps.setInt(2, itemCompra.getProduto().getId());
-            ps.setInt(3, itemCompra.getCompra().getId());
-            ps.executeUpdate();
+            ps.execute();
+            rs = ps.getGeneratedKeys();
+            rs.next();
 
-            if (ps.getUpdateCount() > 0) {
+            if (rs.getInt(1) > 0) {
+                itemCompra.setId(rs.getInt(1));
                 conexao.commit();
                 return "OK";
             }

@@ -5,19 +5,16 @@ public class ItemCompra {
     private int id;
     private int quantidade;
     private Produto produto;
-    private Compra compra;
 
-    public ItemCompra(int id, int quantidade, Produto produto, Compra compra) {
+    public ItemCompra(int id, int quantidade, Produto produto) {
         this.id = id;
         this.quantidade = quantidade;
         this.produto = produto;
-        this.compra = compra;
     }
 
-    public ItemCompra(int quantidade, Produto produto, Compra compra) {
+    public ItemCompra(int quantidade, Produto produto) {
         this.quantidade = quantidade;
         this.produto = produto;
-        this.compra = compra;
     }
 
     public ItemCompra(int id) {
@@ -46,13 +43,5 @@ public class ItemCompra {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
-    }
-
-    public Compra getCompra() {
-        return compra;
-    }
-
-    public void setCompra(Compra compra) {
-        this.compra = compra;
     }
 }
