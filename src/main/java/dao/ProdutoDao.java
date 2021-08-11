@@ -32,7 +32,8 @@ public class ProdutoDao {
                 Produto produto = new Produto(
                         rs.getInt("id"),
                         rs.getString("nome"),
-                        rs.getBigDecimal("preco")
+                        rs.getBigDecimal("preco"),
+                        rs.getString("detalhes")
                 );
 
                 produtos.add(produto);
@@ -59,7 +60,8 @@ public class ProdutoDao {
                 produto = new Produto(
                         rs.getInt("id"),
                         rs.getString("nome"),
-                        rs.getBigDecimal("preco")
+                        rs.getBigDecimal("preco"),
+                        rs.getString("detalhes")
                 );
             }
         } catch (SQLException e) {
@@ -74,11 +76,12 @@ public class ProdutoDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO produto (nome, preco) VALUES (?, ?)";
+            sql = "INSERT INTO produto (nome, preco, detalhes) VALUES (?, ?, ?)";
 
             ps = conexao.prepareStatement(sql);
             ps.setString(1, produto.getNome());
             ps.setBigDecimal(2, produto.getPreco());
+            ps.setString(3, produto.getDetalhes());
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
@@ -97,12 +100,13 @@ public class ProdutoDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "UPDATE produto SET nome = ?, preco = ? WHERE id = ?";
+            sql = "UPDATE produto SET nome = ?, preco = ?, detalhes = ? WHERE id = ?";
 
             ps = conexao.prepareStatement(sql);
             ps.setString(1, produto.getNome());
             ps.setBigDecimal(2, produto.getPreco());
-            ps.setInt(3, produto.getId());
+            ps.setString(3, produto.getDetalhes());
+            ps.setInt(4, produto.getId());
 
             ps.executeUpdate();
 

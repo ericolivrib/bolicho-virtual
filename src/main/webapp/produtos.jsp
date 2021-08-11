@@ -30,8 +30,11 @@
                 </c:otherwise>
             </c:choose>
 
-            <input type="text" name="nome" value="${produto.nome}" required placeholder="Nome">
-            <input type="number" step="0.01" min="0" name="preco" value="${produto.preco}" required placeholder="Preço (R$)">
+            <input type="text" name="nome" value="${produto.nome}" required placeholder="Nome"><br>
+            <input type="number" step="0.01" min="0" name="preco" value="${produto.preco}" required placeholder="Preço (R$)"><br><br>
+
+            <textarea name="detalhes" cols="30" rows="10" placeholder="Descreva o produto em detalhes">${produto.detalhes}
+            </textarea><br>
 
             <button type="submit" name="logica" value="${logica}">Confirmar</button>
 
@@ -53,6 +56,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Preço</th>
+                    <th>Detalhes</th>
                     <th colspan="2">Ações</th>
                 </tr>
                 </thead>
@@ -61,6 +65,7 @@
                     <tr>
                         <td>${p.nome}</td>
                         <td>${p.preco}</td>
+                        <td>${p.detalhes}</td>
                         <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=EditarProduto&id=${p.id}">Editar</a></td>
                         <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=RemoverProduto&id=${p.id}">Remover</a></td>
                     </tr>

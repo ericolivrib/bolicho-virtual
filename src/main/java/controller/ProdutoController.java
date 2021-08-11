@@ -64,8 +64,9 @@ public class ProdutoController extends HttpServlet {
 
             String nome = req.getParameter("nome");
             BigDecimal preco = new BigDecimal(req.getParameter("preco"));
+            String detalhes = req.getParameter("detalhes");
 
-            Produto produto = new Produto(nome, preco);
+            Produto produto = new Produto(nome, preco, detalhes);
 
             Connection conexao = (Connection) req.getAttribute("conexao");
 
@@ -117,8 +118,9 @@ public class ProdutoController extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             String nome = req.getParameter("nome");
             BigDecimal preco = new BigDecimal(req.getParameter("preco"));
+            String detalhes = req.getParameter("detalhes");
 
-            Produto produto = new Produto(id, nome, preco);
+            Produto produto = new Produto(id, nome, preco, detalhes);
 
             Connection conexao = (Connection) req.getAttribute("conexao");
 

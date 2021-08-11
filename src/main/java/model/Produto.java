@@ -7,16 +7,19 @@ public class Produto {
     private int id;
     private String nome;
     private BigDecimal preco;
+    private String detalhes;
 
-    public Produto(int id, String nome, BigDecimal preco) {
+    public Produto(int id, String nome, BigDecimal preco, String detalhes) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
+        this.detalhes = detalhes;
     }
 
-    public Produto(String nome, BigDecimal preco) {
+    public Produto(String nome, BigDecimal preco, String detalhes) {
         this.nome = nome;
         this.preco = preco;
+        this.detalhes = detalhes;
     }
 
     public Produto(int id) {
@@ -45,5 +48,13 @@ public class Produto {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public String getDetalhes() {
+        return detalhes;
+    }
+
+    public void setDetalhes(String detalhes) {
+        this.detalhes = detalhes;
     }
 }
