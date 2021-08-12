@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class CompraDao {
 
+    // diminuir variáveis globais
     private String sql;
     private Statement stmt;
     private PreparedStatement ps;

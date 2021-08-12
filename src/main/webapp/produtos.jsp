@@ -9,11 +9,11 @@
 <body>
     <header>
         <nav>
-            <h3><a href="http://localhost:8080/bolicho-virtual/">Bolicho</a></h3>
+            <h3><c:url value="/">Bolicho</c:url></h3>
             <ul>
-                <li><a href="http://localhost:8080/bolicho-virtual/clientes?logica=ListarClientes">Clientes</a></li>
-                <li><a href="http://localhost:8080/bolicho-virtual/vendedores?logica=ListarVendedores">Vendedores</a></li>
-                <li><a href="http://localhost:8080/bolicho-virtual/produtos?logica=ListarProdutos">Produtos</a></li>
+                <li><c:url value="clientes?logica=ListarClientes">Clientes</c:url></li>
+                <li><c:url value="vendedores?logica=ListarVendedores">Vendedores</c:url></li>
+                <li><c:url value="produtos?logica=ListarProdutos">Produtos</c:url></li>
             </ul>
         </nav>
     </header>
@@ -39,8 +39,7 @@
             <button type="submit" name="logica" value="${logica}">Confirmar</button>
 
             <c:if test="${logica == 'AtualizarProduto'}">
-                <a href="http://localhost:8080/bolicho-virtual/produtos?logica=ListarProdutos">
-                    <button type="button">Cancelar</button></a>
+                <c:url value="produtos?logica=ListarProdutos"><button type="button">Cancelar</button></c:url>
             </c:if>
         </form>
 
@@ -66,8 +65,8 @@
                         <td>${p.nome}</td>
                         <td>${p.preco}</td>
                         <td>${p.detalhes}</td>
-                        <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=EditarProduto&id=${p.id}">Editar</a></td>
-                        <td><a href="http://localhost:8080/bolicho-virtual/produtos?logica=RemoverProduto&id=${p.id}">Remover</a></td>
+                        <td><c:url value="produtos?logica=EditarProduto&id=${p.id}">Editar</c:url></td>
+                        <td><c:url value="produtos?logica=RemoverProduto&id=${p.id}">Remover</c:url></td>
                     </tr>
                 </c:forEach>
                 </tbody>

@@ -100,7 +100,8 @@ public class CompraController extends HttpServlet {
     public static class ConcluirCompra implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[COMPRA] Concluindo compra...");
 
@@ -111,8 +112,8 @@ public class CompraController extends HttpServlet {
             Compra compra = new Compra(id, status);
 
             Connection conexao = (Connection) req.getAttribute("conexao");
-            CompraDao dao = new CompraDao(conexao);
 
+            CompraDao dao = new CompraDao(conexao);
             String retorno = dao.atualizar(compra);
 
             if (retorno.equals("OK")) {
@@ -128,7 +129,8 @@ public class CompraController extends HttpServlet {
     public static class CancelarCompra implements LogicaNegocio {
 
         @Override
-        public String executa(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
             System.out.println("[COMPRA] Cancelando compra...");
 
@@ -145,6 +147,69 @@ public class CompraController extends HttpServlet {
 
             if (retorno.equals("OK")) {
                 req.setAttribute("retorno", "<strong>OK!</strong> Status da compra alterado para CANCELADO!");
+            } else {
+                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível alterar o status da compra.");
+            }
+
+            return "/";
+        }
+    }
+
+    public static class ListarCompras implements LogicaNegocio {
+
+        @Override
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
+            return null;
+        }
+    }
+
+    public static class DadosCompra implements LogicaNegocio {
+
+        @Override
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
+            System.out.println("[COMPRA] Listando dados da compra");
+
+            int id = Integer.parseInt(req.getParameter("id"));
+
+            Connection conexao = (Connection) req.getAttribute("conexao");
+            CompraDao dao = new CompraDao(conexao);
+            Compra compra = dao.selecionar(id);
+
+            req.setAttribute("compra", compra);
+            req.setAttribute("logica", "AtualizarStatus");
+
+            return "/";
+        }
+    }
+
+    public static class AtualizarStatus implements LogicaNegocio {
+
+        @Override
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
+            System.out.println("[COMPRA] Atualizando status da compra...");
+
+            int id = Integer.parseInt(req.getParameter("id"));
+            int s = Integer.parseInt(req.getParameter("s"));
+
+            String descricao = req.getParameter("descricao");
+            String motivo = req.getParameter("motivo");
+
+            StatusCompra status = new StatusCompra(s, descricao, motivo);
+            Compra compra = new Compra(id, status);
+
+            Connection conexao = (Connection) req.getAttribute("conexao");
+
+            CompraDao dao = new CompraDao(conexao);
+            String retorno = dao.atualizar(compra);
+
+            if (retorno.equals("OK")) {
+                req.setAttribute("retorno", "<strong>OK!</strong> Status da compra alterado para " + descricao + "!");
             } else {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível alterar o status da compra.");
             }

@@ -10,11 +10,11 @@
 <body>
     <header>
         <nav>
-            <h3><a href="http://localhost:8080/bolicho-virtual/">Bolicho</a></h3>
+            <h3><c:url value="/">Bolicho</c:url></h3>
             <ul>
-                <li><a href="http://localhost:8080/bolicho-virtual/clientes?logica=ListarClientes">Clientes</a></li>
-                <li><a href="http://localhost:8080/bolicho-virtual/vendedores?logica=ListarVendedores">Vendedores</a></li>
-                <li><a href="http://localhost:8080/bolicho-virtual/produtos?logica=ListarProdutos">Produtos</a></li>
+                <li><c:url value="clientes?logica=ListarClientes">Clientes</c:url></li>
+                <li><c:url value="vendedores?logica=ListarVendedores">Vendedores</c:url></li>
+                <li><c:url value="produtos?logica=ListarProdutos">Produtos</c:url></li>
             </ul>
         </nav>
     </header>
@@ -123,7 +123,9 @@
 
             <button type="submit" name="logica" value="${logica}">Confirmar</button>
             <c:if test="${logica == 'AtualizarCliente'}">
-                <a href="http://localhost:8080/bolicho-virtual/clientes?logica=ListarClientes"><button type="button">Cancelar</button></a>
+<%--                Cuidado!!! --%>
+<%--                <c:url --%>
+                <c:url value="clientes?logica=ListarClientes"><button type="button">Cancelar</button></c:url>
             </c:if>
         </form>
 
@@ -153,8 +155,8 @@
                         <td>${c.usuario.telefone}</td>
                         <td>${c.usuario.endereco.rua}, ${c.usuario.endereco.numeroCasa} - ${c.usuario.endereco.bairro}</td>
                         <td>${c.usuario.dataCadastro}</td>
-                        <td><a href="http://localhost:8080/bolicho-virtual/clientes?logica=EditarCliente&id=${c.id}">Editar</a></td>
-                        <td><a href="http://localhost:8080/bolicho-virtual/clientes?logica=RemoverCliente&id=${c.id}&usuario_id=${c.usuario.id}&endereco_id=${c.usuario.endereco.id}">Remover</a></td>
+                        <td><c:url value="clientes?logica=EditarCliente&id=${c.id}">Editar</c:url></td>
+                        <td><c:url value="clientes?logica=RemoverCliente&id=${c.id}&usuario_id=${c.usuario.id}&endereco_id=${c.usuario.endereco.id}">Remover</c:url></td>
                     </tr>
                 </c:forEach>
                 </tbody>

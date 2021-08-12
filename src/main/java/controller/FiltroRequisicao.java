@@ -16,7 +16,7 @@ public class FiltroRequisicao implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        try {
+        try { // minimizar conexões
             Connection conexao = new ConexaoBase().getConexao();
             request.setAttribute("conexao", conexao);
             chain.doFilter(request, response);

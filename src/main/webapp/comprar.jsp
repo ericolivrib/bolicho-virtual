@@ -9,11 +9,11 @@
 <body>
     <header>
         <nav>
-            <h3><a href="http://localhost:8080/bolicho-virtual/">Bolicho</a></h3>
+            <h3><c:url value="/">Bolicho</c:url></h3>
             <ul>
-                <li><a href="http://localhost:8080/bolicho-virtual/clientes?logica=ListarClientes">Clientes</a></li>
-                <li><a href="http://localhost:8080/bolicho-virtual/vendedores?logica=ListarVendedores">Vendedores</a></li>
-                <li><a href="http://localhost:8080/bolicho-virtual/produtos?logica=ListarProdutos">Produtos</a></li>
+                <li><c:url value="clientes?logica=ListarClientes">Clientes</c:url></li>
+                <li><c:url value="vendedores?logica=ListarVendedores">Vendedores</c:url></li>
+                <li><c:url value="produtos?logica=ListarProdutos">Produtos</c:url></li>
             </ul>
         </nav>
     </header>
@@ -54,7 +54,7 @@
             </select>
 
             <button type="submit" name="logica" value="FinalizarCompra">Finalizar</button>
-            <a href="http://localhost:8080/bolicho-virtual/"><button type="button">Cancelar</button></a>
+            <c:url value="/"><button type="button">Cancelar</button></c:url>
         </form>
     </section>
 </body>
