@@ -5,13 +5,8 @@ import model.Produto;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProdutoDao {
+public class ProdutoDao implements DAO<Produto> {
 
-    private String status;
-    private String sql;
-    private Statement stmt;
-    private PreparedStatement ps;
-    private ResultSet rs;
     private Connection conexao;
 
     public ProdutoDao(Connection conexao) {
@@ -23,10 +18,10 @@ public class ProdutoDao {
         ArrayList<Produto> produtos = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM produto";
+            String sql = "SELECT * FROM produto";
 
-            stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 Produto produto = new Produto(
@@ -50,11 +45,11 @@ public class ProdutoDao {
         Produto produto = null;
 
         try {
-            sql = "SELECT * FROM produto WHERE id = ?";
+            String sql = "SELECT * FROM produto WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 produto = new Produto(
@@ -76,9 +71,9 @@ public class ProdutoDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO produto (nome, preco, detalhes) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO produto (nome, preco, detalhes) VALUES (?, ?, ?)";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, produto.getNome());
             ps.setBigDecimal(2, produto.getPreco());
             ps.setString(3, produto.getDetalhes());
@@ -100,9 +95,9 @@ public class ProdutoDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "UPDATE produto SET nome = ?, preco = ?, detalhes = ? WHERE id = ?";
+            String sql = "UPDATE produto SET nome = ?, preco = ?, detalhes = ? WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, produto.getNome());
             ps.setBigDecimal(2, produto.getPreco());
             ps.setString(3, produto.getDetalhes());
@@ -112,14 +107,13 @@ public class ProdutoDao {
 
             if (ps.getUpdateCount() > 0) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 
     public String deletar(Produto produto) {
@@ -127,21 +121,20 @@ public class ProdutoDao {
         try {
             conexao.setAutoCommit(false);
 
-            sql = "DELETE FROM produto WHERE id = ?";
+            String sql = "DELETE FROM produto WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, produto.getId());
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
                 conexao.commit();
-                status = "OK";
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            status = "Erro";
         }
 
-        return status;
+        return "Erro";
     }
 }

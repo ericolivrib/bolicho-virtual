@@ -5,28 +5,24 @@ import model.Endereco;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class EnderecoDao {
+public class EnderecoDao implements DAO<Endereco> {
 
-    private String status;
-    private String sql;
-    private Statement stmt;
-    private PreparedStatement ps;
-    private ResultSet rs;
     private Connection conexao;
 
     public EnderecoDao(Connection conexao) {
         this.conexao = conexao;
     }
 
+    @Override
     public ArrayList<Endereco> selecionar() {
 
         ArrayList<Endereco> enderecos = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM endereco";
+            String sql = "SELECT * FROM endereco";
 
-            stmt = conexao.createStatement();
-            rs = ps.executeQuery(sql);
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 Endereco endereco = new Endereco(
@@ -46,17 +42,17 @@ public class EnderecoDao {
         return enderecos;
     }
 
+    @Override
     public Endereco selecionar(int id) {
 
         Endereco endereco = null;
 
         try {
-            sql = "SELECT * FROM endereco WHERE id = ?";
+            String sql = "SELECT * FROM endereco WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
-
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 endereco = new Endereco(
@@ -74,21 +70,22 @@ public class EnderecoDao {
         return endereco;
     }
 
+    @Override
     public String inserir(Endereco endereco) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO endereco (rua, numero_casa, bairro, complemento) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO endereco (rua, numero_casa, bairro, complemento) VALUES (?, ?, ?, ?)";
 
-            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, endereco.getRua());
             ps.setInt(2, endereco.getNumeroCasa());
             ps.setString(3, endereco.getBairro());
             ps.setString(4, endereco.getComplemento());
 
             ps.execute();
-            rs = ps.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
             rs.next();
 
             if (rs.getInt(1) > 0) {
@@ -98,20 +95,20 @@ public class EnderecoDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";
     }
 
+    @Override
     public String atualizar(Endereco endereco) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "UPDATE endereco SET rua = ?, numero_casa = ?, bairro = ?, complemento = ? WHERE id = ?";
+            String sql = "UPDATE endereco SET rua = ?, numero_casa = ?, bairro = ?, complemento = ? WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, endereco.getRua());
             ps.setInt(2, endereco.getNumeroCasa());
             ps.setString(3, endereco.getBairro());
@@ -126,20 +123,19 @@ public class EnderecoDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";
     }
 
+    @Override
     public String deletar(Endereco endereco) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "DELETE FROM endereco WHERE id = ?";
-
-            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            String sql = "DELETE FROM endereco WHERE id = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, endereco.getId());
             ps.executeUpdate();
 
@@ -149,7 +145,6 @@ public class EnderecoDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";

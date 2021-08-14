@@ -1,31 +1,28 @@
 package dao;
 
+import model.ItemCompra;
 import model.StatusCompra;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class StatusCompraDao {
+public class StatusCompraDao implements DAO<StatusCompra> {
 
-    private String sql;
-    private Statement stmt;
-    private PreparedStatement ps;
-    private ResultSet rs;
     private Connection conexao;
 
     public StatusCompraDao(Connection conexao) {
         this.conexao = conexao;
     }
 
+    @Override
     public ArrayList<StatusCompra> selecionar() {
 
         ArrayList<StatusCompra> statusCompras = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM status_compra";
-
-            stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM status_compra";
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 StatusCompra status = new StatusCompra(
@@ -34,7 +31,6 @@ public class StatusCompraDao {
                         rs.getDate("data_status").toLocalDate(),
                         rs.getString("motivo")
                 );
-
                 statusCompras.add(status);
             }
         } catch (SQLException e) {
@@ -44,16 +40,16 @@ public class StatusCompraDao {
         return statusCompras;
     }
 
+    @Override
     public StatusCompra selecionar(int id) {
 
         StatusCompra statusCompra = null;
 
         try {
-            sql = "SELECT * FROM status_compra WHERE id = ?";
-
-            ps = conexao.prepareStatement(sql);
+            String sql = "SELECT * FROM status_compra WHERE id = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 statusCompra = new StatusCompra(
@@ -70,18 +66,18 @@ public class StatusCompraDao {
         return statusCompra;
     }
 
+    @Override
     public String inserir(StatusCompra statusCompra) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
-
-            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            String sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
+            PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, statusCompra.getDescricao());
             ps.setString(2, statusCompra.getMotivo());
             ps.execute();
-            rs = ps.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
             rs.next();
 
             if (rs.getInt(1) > 0) {
@@ -91,18 +87,17 @@ public class StatusCompraDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";
     }
 
+    @Override
     public String atualizar(StatusCompra statusCompra) {
 
         try {
-            sql = "UPDATE status_compra SET descricao = ?, motivo = ? WHERE id = ?";
-
-            ps = conexao.prepareStatement(sql);
+            String sql = "UPDATE status_compra SET descricao = ?, motivo = ? WHERE id = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, statusCompra.getDescricao());
             ps.setString(2, statusCompra.getMotivo());
             ps.setInt(3, statusCompra.getId());
@@ -118,5 +113,10 @@ public class StatusCompraDao {
         }
 
         return "Erro";
+    }
+
+    @Override
+    public String deletar(StatusCompra statusCompra) {
+        return null;
     }
 }

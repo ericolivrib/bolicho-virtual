@@ -6,28 +6,24 @@ import model.ItemCompra;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CompraDao {
+public class CompraDao implements DAO<Compra> {
 
-    // diminuir variáveis globais
-    private String sql;
-    private Statement stmt;
-    private PreparedStatement ps;
-    private ResultSet rs;
     private Connection conexao;
 
     public CompraDao(Connection conexao) {
         this.conexao = conexao;
     }
 
+    @Override
     public ArrayList<Compra> selecionar() {
 
         ArrayList<Compra> compras = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM compra";
+            String sql = "SELECT * FROM compra";
 
-            stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 Compra compra  = new Compra(
@@ -49,16 +45,17 @@ public class CompraDao {
         return compras;
     }
 
+    @Override
     public Compra selecionar(int id) {
 
         Compra compra = null;
 
         try {
-            sql = "SELECT * FROM compra WHERE id = ?";
+            String sql = "SELECT * FROM compra WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 compra  = new Compra(
@@ -78,6 +75,7 @@ public class CompraDao {
         return compra;
     }
 
+    @Override
     public String inserir(Compra compra) {
 
         String retorno = new ItemCompraDao(conexao).inserir(compra.getItem());
@@ -89,17 +87,16 @@ public class CompraDao {
                 try {
                     conexao.setAutoCommit(false);
 
-                    sql = "INSERT INTO compra (valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) " +
+                    String sql = "INSERT INTO compra (valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) " +
                             "VALUES (?, CURRENT_DATE, ?, ?, ?, ?)";
-
-                    ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                    PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                     ps.setBigDecimal(1, compra.getValor());
                     ps.setInt(2, compra.getCliente().getId());
                     ps.setInt(3, compra.getVendedor().getId());
                     ps.setInt(4, compra.getItem().getId());
                     ps.setInt(5, compra.getStatus().getId());
                     ps.executeUpdate();
-                    rs = ps.getGeneratedKeys();
+                    ResultSet rs = ps.getGeneratedKeys();
                     rs.next();
 
                     if (rs.getInt(1) > 0) {
@@ -109,7 +106,6 @@ public class CompraDao {
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    return "Erro";
                 }
             }
         }
@@ -117,6 +113,7 @@ public class CompraDao {
         return "Erro";
     }
 
+    @Override
     public String atualizar(Compra compra) {
 
         try {
@@ -132,5 +129,10 @@ public class CompraDao {
         }
 
         return "Erro";
+    }
+
+    @Override
+    public String deletar(Compra compra) {
+        return null;
     }
 }

@@ -5,27 +5,23 @@ import model.ItemCompra;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ItemCompraDao {
+public class ItemCompraDao implements DAO<ItemCompra> {
 
-    private String sql;
-    private Statement stmt;
-    private PreparedStatement ps;
-    private ResultSet rs;
     private Connection conexao;
 
     public ItemCompraDao(Connection conexao) {
         this.conexao = conexao;
     }
 
+    @Override
     public ArrayList<ItemCompra> selecionar() {
 
         ArrayList<ItemCompra> itensCompra = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM item_compra";
-
-            stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM item_compra";
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 ItemCompra itemCompra = new ItemCompra(
@@ -33,7 +29,6 @@ public class ItemCompraDao {
                         rs.getInt("quantidade"),
                         new ProdutoDao(conexao).selecionar(rs.getInt("produto_id"))
                 );
-
                 itensCompra.add(itemCompra);
             }
         } catch (SQLException e) {
@@ -43,16 +38,16 @@ public class ItemCompraDao {
         return itensCompra;
     }
 
+    @Override
     public ItemCompra selecionar(int id) {
 
         ItemCompra itemCompra = null;
 
         try {
-            sql = "SELECT * FROM item_compra WHERE id = ?";
-
-            ps = conexao.prepareStatement(sql);
+            String sql = "SELECT * FROM item_compra WHERE id = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 itemCompra = new ItemCompra(
@@ -68,18 +63,18 @@ public class ItemCompraDao {
         return itemCompra;
     }
 
+    @Override
     public String inserir(ItemCompra itemCompra) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "INSERT INTO item_compra (quantidade, produto_id) VALUES (?, ?)";
-
-            ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            String sql = "INSERT INTO item_compra (quantidade, produto_id) VALUES (?, ?)";
+            PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, itemCompra.getQuantidade());
             ps.setInt(2, itemCompra.getProduto().getId());
             ps.execute();
-            rs = ps.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
             rs.next();
 
             if (rs.getInt(1) > 0) {
@@ -89,20 +84,24 @@ public class ItemCompraDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";
     }
 
+    @Override
+    public String atualizar(ItemCompra itemCompra) {
+        return null;
+    }
+
+    @Override
     public String deletar(ItemCompra itemCompra) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "DELETE FROM item_compra WHERE id = ?";
-
-            ps = conexao.prepareStatement(sql);
+            String sql = "DELETE FROM item_compra WHERE id = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, itemCompra.getId());
             ps.executeUpdate();
 
@@ -112,7 +111,6 @@ public class ItemCompraDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";

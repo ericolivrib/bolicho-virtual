@@ -5,27 +5,24 @@ import model.Vendedor;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class VendedorDao {
+public class VendedorDao implements DAO<Vendedor> {
 
-    private String sql;
-    private Statement stmt;
-    private PreparedStatement ps;
-    private ResultSet rs;
     private Connection conexao;
 
     public VendedorDao(Connection conexao) {
         this.conexao = conexao;
     }
 
+    @Override
     public ArrayList<Vendedor> selecionar() {
 
         ArrayList<Vendedor> vendedores = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM vendedor";
+            String sql = "SELECT * FROM vendedor";
 
-            stmt = conexao.createStatement();
-            rs = stmt.executeQuery(sql);
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 Vendedor vendedor = new Vendedor(
@@ -42,16 +39,17 @@ public class VendedorDao {
         return vendedores;
     }
 
+    @Override
     public Vendedor selecionar(int id) {
 
         Vendedor vendedor = null;
 
         try {
-            sql = "SELECT * FROM vendedor WHERE id = ?";
+            String sql = "SELECT * FROM vendedor WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 vendedor = new Vendedor(
@@ -66,6 +64,7 @@ public class VendedorDao {
         return vendedor;
     }
 
+    @Override
     public String inserir(Vendedor vendedor) {
 
         try {
@@ -74,9 +73,9 @@ public class VendedorDao {
             String retorno = new UsuarioDao(conexao).inserir(vendedor.getUsuario());
 
             if (retorno.equals("OK")) {
-                sql = "INSERT INTO vendedor (usuario_id) VALUES (?)";
+                String sql = "INSERT INTO vendedor (usuario_id) VALUES (?)";
 
-                ps = conexao.prepareStatement(sql);
+                PreparedStatement ps = conexao.prepareStatement(sql);
                 ps.setInt(1, vendedor.getUsuario().getId());
                 ps.executeUpdate();
 
@@ -93,6 +92,7 @@ public class VendedorDao {
         return "Erro";
     }
 
+    @Override
     public String atualizar(Vendedor vendedor) {
 
         try {
@@ -106,20 +106,20 @@ public class VendedorDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
 
         return "Erro";
     }
 
+    @Override
     public String deletar(Vendedor vendedor) {
 
         try {
             conexao.setAutoCommit(false);
 
-            sql = "DELETE FROM vendedor WHERE id = ?";
+            String sql = "DELETE FROM vendedor WHERE id = ?";
 
-            ps = conexao.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, vendedor.getId());
             ps.executeUpdate();
 
