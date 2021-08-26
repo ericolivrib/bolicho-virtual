@@ -95,7 +95,6 @@
 </header>
 
 <section class="container">
-
     <form action="produtos" method="POST">
         <div class="d-flex justify-content-center mb-3">
             <c:choose>
@@ -120,8 +119,7 @@
             <div class="row g-2 mb-3">
                 <div class="col-md">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="nome" name="nome" value="${produto.nome}" placeholder="Queijo Colonial"
-                               required>
+                        <input type="text" class="form-control" id="nome" name="nome" value="${produto.nome}" placeholder="Queijo Colonial" required>
                         <label for="nome">Nome</label>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 # Bolicho Virtual
 
-Sistema web de venda de produtos coloniais e artesanais.
+Sistema web de gerenciamendo de venda de produtos coloniais e artesanais.
 
 ### TODO
 
@@ -10,4 +10,3 @@ Sistema web de venda de produtos coloniais e artesanais.
 - [x] Controller
 - [ ] View
 - [x] Tratamento de requisições
-- [ ] Classes e implementação de _login_

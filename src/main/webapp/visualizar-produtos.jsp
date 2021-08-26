@@ -59,10 +59,7 @@
             <div class="float-end" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" id="produtos" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">
-                            Produtos
-                        </a>
+                        <a class="nav-link dropdown-toggle active" href="#" id="produtos" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">Produtos</a>
                         <ul class="dropdown-menu" aria-labelledby="produtos">
                             <li><a class="dropdown-item" href="operacoes-produto.jsp">Cadastrar Produto</a></li>
                             <li>
@@ -72,10 +69,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="usuarios" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Usuários
-                        </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="usuarios" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuários</a>
                         <ul class="dropdown-menu" aria-labelledby="usuarios">
                             <li><a class="dropdown-item" href="#">Cadastrar Usuário</a></li>
                             <li>
@@ -101,7 +95,7 @@
     <c:if test="${not empty retorno}">
         <div class="alert ${classeAlert} alert-dismissible fade show" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="${xlink}"/></svg>
-                ${retorno}
+            ${retorno}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </c:if>
@@ -126,8 +120,7 @@
                     <td>
                         <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal"
                            data-bs-target="#produtoModal" data-bs-whatever="${p.detalhes}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="43" height="16" fill="currentColor"
-                                 class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="43" height="16" fill="currentColor" class="bi bi-file-text-fill" viewBox="0 0 16 16">
                                 <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z"/>
                             </svg>
                         </a>
@@ -162,8 +155,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="detalhes" name="detalhes"
-                                  style="height: 200px;" disabled></textarea>
+                        <textarea class="form-control" id="detalhes" name="detalhes" style="height: 200px;" disabled></textarea>
                         <label for="detalhes">Detalhes</label>
                     </div>
                 </form>
@@ -181,7 +173,6 @@
         var botao = event.relatedTarget
         var descricao = botao.getAttribute('data-bs-whatever')
         var formControl = produtoModal.querySelector('.modal-body textarea')
-
         formControl.innerHTML = descricao
     })
 </script>

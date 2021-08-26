@@ -53,18 +53,17 @@
             <div class="float-end" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" aria-current="page" href="#"
-                           id="produtosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Produtos
-                        </a>
+                        <a class="nav-link dropdown-toggle active" aria-current="page" href="#" id="produtosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
                         <ul class="dropdown-menu" aria-labelledby="produtosDropdown">
-                            <li><a class="dropdown-item" href="<c:url value="operacoes-produto.jsp"/>">"Cadastrar
-                                Produto</a></li>
+                            <li>
+                                <a class="dropdown-item" href="<c:url value="operacoes-produto.jsp"/>">"Cadastrar Produto</a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="<c:url value="produtos?logica=Listar"/>">Listar
-                                Produtos</a></li>
+                            <li>
+                                <a class="dropdown-item" href="<c:url value="produtos?logica=Listar"/>">Listar Produtos</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -73,13 +72,11 @@
                             Usuários
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="usuariosDropdown">
-                            <li><a class="dropdown-item" href="<c:url value="operacoes-usuario.jsp"/>">Cadastrar
-                                Usuário</a></li>
+                            <li><a class="dropdown-item" href="<c:url value="operacoes-usuario.jsp"/>">Cadastrar Usuário</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="<c:url value="usuarios?logica=Listar"/>">Listar
-                                Usuários</a></li>
+                            <li><a class="dropdown-item" href="<c:url value="usuarios?logica=Listar"/>">Listar Usuários</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -100,7 +97,7 @@
     <c:if test="${not empty retorno}">
         <div class="alert ${classeAlert} alert-dismissible fade show" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="${xlink}"/></svg>
-                ${retorno}
+            ${retorno}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </c:if>
@@ -147,11 +144,9 @@
                         <td>${u.usuario.email}</td>
                         <td>${u.usuario.telefone}</td>
                         <td>
-                            <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal"
-                               data-bs-target="#usuarioModal"
+                            <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#usuarioModal"
                                data-bs-whatever="${u.usuario.endereco.rua}+${u.usuario.endereco.numeroCasa}+${u.usuario.endereco.bairro}+${u.usuario.endereco.complemento}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="16" fill="currentColor"
-                                     class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="16" fill="currentColor" class="bi bi-file-text-fill" viewBox="0 0 16 16">
                                     <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z"/>
                                 </svg>
                             </a>
@@ -171,11 +166,9 @@
                         <td>${u.usuario.email}</td>
                         <td>${u.usuario.telefone}</td>
                         <td>
-                            <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal"
-                               data-bs-target="#usuarioModal"
+                            <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#usuarioModal"
                                data-bs-whatever="${u.usuario.endereco.rua}+${u.usuario.endereco.numeroCasa}+${u.usuario.endereco.bairro}+${u.usuario.endereco.complemento}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="16" fill="currentColor"
-                                     class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="16" fill="currentColor" class="bi bi-file-text-fill" viewBox="0 0 16 16">
                                     <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z"/>
                                 </svg>
                             </a>
@@ -232,8 +225,7 @@
                         <label for="bairro">Bairro</label>
                     </div>
                     <div class="form-floating">
-                        <textarea class="form-control" name="complemento" id="complemento" style="height: 200px;"
-                                  disabled></textarea>
+                        <textarea class="form-control" name="complemento" id="complemento" style="height: 200px;" disabled></textarea>
                         <label for="complemento">Complemento</label>
                     </div>
                 </form>
