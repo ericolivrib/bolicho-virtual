@@ -8,37 +8,36 @@ public class Usuario {
     private String nome;
     private String email;
     private String telefone;
-    private String senha;
     private LocalDate dataCadastro;
+    private boolean ativo;
     private Endereco endereco;
     private Permissao permissao;
 
-    public Usuario(String nome, String email, String telefone, String senha, Endereco endereco, Permissao permissao) {
+    public Usuario(String nome, String email, String telefone, boolean ativo, Endereco endereco, Permissao permissao) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-        this.senha = senha;
+        this.ativo = ativo;
         this.endereco = endereco;
         this.permissao = permissao;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha, Endereco endereco, Permissao permissao) {
+    public Usuario(int id, String nome, String email, String telefone, Endereco endereco, Permissao permissao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-        this.senha = senha;
         this.endereco = endereco;
         this.permissao = permissao;
     }
 
-    public Usuario(int id, String nome, String email, String telefone, String senha, LocalDate dataCadastro, Endereco endereco, Permissao permissao) {
+    public Usuario(int id, String nome, String email, String telefone, LocalDate dataCadastro, boolean ativo, Endereco endereco, Permissao permissao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-        this.senha = senha;
         this.dataCadastro = dataCadastro;
+        this.ativo = ativo;
         this.endereco = endereco;
         this.permissao = permissao;
     }
@@ -85,20 +84,20 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Endereco getEndereco() {

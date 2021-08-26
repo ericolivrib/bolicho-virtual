@@ -1,0 +1,12 @@
+.border {
+    padding: 10px;
+    border-radius: 5px;
+    width: 55%;
+    margin: 0 auto;
+    background: #EEEEEE;
+}
+
+.titulo {
+    margin: 30px;
+}
+

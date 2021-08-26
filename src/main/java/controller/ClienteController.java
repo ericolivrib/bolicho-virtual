@@ -76,7 +76,7 @@ public class ClienteController extends HttpServlet {
 
             Endereco endereco = new Endereco(rua, numeroCasa, bairro, complemento);
             Permissao permissao = new Permissao(1);
-            Usuario usuario = new Usuario(nome, email, telefone, senha, endereco, permissao);
+            Usuario usuario = new Usuario(nome, email, telefone, true, endereco, permissao);
             Cliente cliente = new Cliente(usuario);
 
             Connection conexao = (Connection) req.getAttribute("conexao");
@@ -140,7 +140,7 @@ public class ClienteController extends HttpServlet {
 
             Endereco endereco = new Endereco(enderecoId, rua, numeroCasa, bairro, complemento);
             Permissao permissao = new Permissao(1);
-            Usuario usuario = new Usuario(usuarioId, nome, email, telefone, senha, endereco, permissao);
+            Usuario usuario = new Usuario(usuarioId, nome, email, telefone, endereco, permissao);
             Cliente cliente = new Cliente(id, usuario);
 
             Connection conexao = (Connection) req.getAttribute("conexao");

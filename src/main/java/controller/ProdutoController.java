@@ -35,7 +35,7 @@ public class ProdutoController extends HttpServlet {
         }
     }
 
-    public static class ListarProdutos implements LogicaNegocio {
+    public static class Listar implements LogicaNegocio {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -48,13 +48,13 @@ public class ProdutoController extends HttpServlet {
             ArrayList<Produto> produtos = new ProdutoDao(conexao).selecionar();
 
             req.setAttribute("produtos", produtos);
-            req.setAttribute("logica", "AdicionarProduto");
+            req.setAttribute("logica", "Cadastrar");
 
-            return "produtos.jsp";
+            return "visualizar-produtos.jsp";
         }
     }
 
-    public static class AdicionarProduto implements LogicaNegocio {
+    public static class Cadastrar implements LogicaNegocio {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -73,20 +73,22 @@ public class ProdutoController extends HttpServlet {
             String retorno = new ProdutoDao(conexao).inserir(produto);
 
             if (retorno.equals("OK")) {
-                req.setAttribute("retorno", "<strong>OK!</strong> Produto adicionado!");
+                req.setAttribute("xlink", "#check-circle-fill");
+                req.setAttribute("classeAlert", "alert-success");
+                req.setAttribute("retorno", "<strong>OK!</strong> " + nome + " foi cadastrado e adicionado à lista de produtos!");
             } else {
-                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível adicionar o produto!");
+                req.setAttribute("xlink", "#exclamation-triangle-fill");
+                req.setAttribute("classeAlert", "alert-warning");
+                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível cadastrar " + nome + "!");
             }
 
-//            new ListarProdutos().executa(req, resp);
+            req.setAttribute("logica", "Cadastrar");
 
-            req.setAttribute("logica", "AdicionarProduto");
-
-            return "produtos?logica=ListarProdutos";
+            return "operacoes-produto.jsp";
         }
     }
 
-    public static class EditarProduto implements LogicaNegocio {
+    public static class Editar implements LogicaNegocio {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -101,13 +103,13 @@ public class ProdutoController extends HttpServlet {
             Produto produto = new ProdutoDao(conexao).selecionar(id);
 
             req.setAttribute("produto", produto);
-            req.setAttribute("logica", "AtualizarProduto");
+            req.setAttribute("logica", "Atualizar");
 
-            return "produtos.jsp";
+            return "operacoes-produto.jsp";
         }
     }
 
-    public static class AtualizarProduto implements LogicaNegocio {
+    public static class Atualizar implements LogicaNegocio {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -127,20 +129,22 @@ public class ProdutoController extends HttpServlet {
             String retorno = new ProdutoDao(conexao).atualizar(produto);
 
             if (retorno.equals("OK")) {
+                req.setAttribute("xlink", "#check-circle-fill");
+                req.setAttribute("classeAlert", "alert-success");
                 req.setAttribute("retorno", "<strong>OK!</strong> Produto atualizado!");
             } else {
+                req.setAttribute("xlink", "#exclamation-triangle-fill");
+                req.setAttribute("classeAlert", "alert-warning");
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível atualizar o produto!");
             }
 
-//            new ListarProdutos().executa(req, resp);
+            req.setAttribute("logica", "Cadastrar");
 
-            req.setAttribute("logica", "AdicionarProduto");
-
-            return "produtos?logica=ListarProdutos";
+            return "produtos?logica=Listar";
         }
     }
 
-    public static class RemoverProduto implements LogicaNegocio {
+    public static class Remover implements LogicaNegocio {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -162,11 +166,11 @@ public class ProdutoController extends HttpServlet {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível remover o produto!");
             }
 
-//            new ListarProdutos().executa(req, resp);
+//            new Listar().executa(req, resp);
 
-            req.setAttribute("logica", "AdicionarProduto");
+            req.setAttribute("logica", "Cadastrar");
 
-            return "produtos?logica=ListarProdutos";
+            return "produtos?logica=Listar";
         }
     }
 }

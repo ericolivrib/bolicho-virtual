@@ -28,14 +28,14 @@ public class UsuarioDao implements DAO<Usuario> {
 
             while (rs.next()) {
                 Usuario usuario = new Usuario (
-                        rs.getInt("id"),
+                        rs.getInt("usuario.id"),
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("telefone"),
-                        rs.getString("senha"),
                         rs.getDate("data_cadastro").toLocalDate(),
+                        rs.getBoolean("ativo"),
                         new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id")),
-                        new Permissao(rs.getInt("id"), rs.getString("descricao"))
+                        new Permissao(rs.getInt("permissao_id"), rs.getString("descricao"))
                 );
 
                 usuarios.add(usuario);
@@ -67,10 +67,10 @@ public class UsuarioDao implements DAO<Usuario> {
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("telefone"),
-                        rs.getString("senha"),
                         rs.getDate("data_cadastro").toLocalDate(),
+                        rs.getBoolean("ativo"),
                         new EnderecoDao(conexao).selecionar(rs.getInt("endereco_id")),
-                        new Permissao(rs.getInt("id"), rs.getString("descricao"))
+                        new Permissao(rs.getInt("permissao_id"), rs.getString("descricao"))
                 );
             }
         } catch (SQLException e) {
@@ -89,15 +89,15 @@ public class UsuarioDao implements DAO<Usuario> {
             String retorno = new EnderecoDao(conexao).inserir(usuario.getEndereco());
 
             if (retorno.equals("OK")) {
-                String sql = "INSERT INTO usuario (nome, telefone, email, senha, endereco_id, data_cadastro) " +
-                        "VALUES (?, ?, ?, ?, ?, CURRENT_DATE)";
+                String sql = "INSERT INTO usuario (nome, telefone, email, endereco_id, data_cadastro, ativo) " +
+                        "VALUES (?, ?, ?, ?, CURRENT_DATE, ?)";
 
                 PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1, usuario.getNome());
                 ps.setString(2, usuario.getTelefone());
                 ps.setString(3, usuario.getEmail());
-                ps.setString(4, usuario.getSenha());
-                ps.setInt(5, usuario.getEndereco().getId());
+                ps.setInt(4, usuario.getEndereco().getId());
+                ps.setBoolean(5, usuario.isAtivo());
 
                 ps.execute();
                 ResultSet rs = ps.getGeneratedKeys();
@@ -135,14 +135,13 @@ public class UsuarioDao implements DAO<Usuario> {
             String retorno = new EnderecoDao(conexao).atualizar(usuario.getEndereco());
 
             if (retorno.equals("OK")) {
-                String sql = "UPDATE usuario SET nome = ?, telefone = ?, email = ?, senha = ? WHERE id = ?";
+                String sql = "UPDATE usuario SET nome = ?, telefone = ?, email = ? WHERE id = ?";
 
                 PreparedStatement ps = conexao.prepareStatement(sql);
                 ps.setString(1, usuario.getNome());
                 ps.setString(2, usuario.getTelefone());
                 ps.setString(3, usuario.getEmail());
-                ps.setString(4, usuario.getSenha());
-                ps.setInt(5, usuario.getId());
+                ps.setInt(4, usuario.getId());
 
                 ps.executeUpdate();
 
