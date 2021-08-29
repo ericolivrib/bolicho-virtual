@@ -48,6 +48,11 @@ public class Usuario {
         this.permissao = permissao;
     }
 
+    public Usuario(int id, boolean ativo) {
+        this.id = id;
+        this.ativo = ativo;
+    }
+
     public Usuario(int id) {
         this.id = id;
     }

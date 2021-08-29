@@ -179,4 +179,41 @@ public class UsuarioController extends HttpServlet {
             return "usuarios?logica=Listar";
         }
     }
+
+    public static class Excluir implements Logica {
+
+        @Override
+        public String executa(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
+            int id = Integer.parseInt(req.getParameter("id"));
+            int u = Integer.parseInt(req.getParameter("u"));
+            int p = Integer.parseInt(req.getParameter("p"));
+
+            Connection conexao = (Connection) req.getAttribute("conexao");
+            String retorno;
+
+            Usuario usuario = new Usuario(u, false);
+
+            if (p == 1) {
+                Cliente cliente = new Cliente(id, usuario);
+                retorno = new ClienteDao(conexao).deletar(cliente);
+            } else {
+                Vendedor vendedor = new Vendedor(id, usuario);
+                retorno = new VendedorDao(conexao).deletar(vendedor);
+            }
+
+            if (retorno.equals("OK")) {
+                req.setAttribute("xlink", "#check-circle-fill");
+                req.setAttribute("classeAlert", "alert-success");
+                req.setAttribute("retorno", "<strong>OK!</strong> O usuário foi excluído!");
+            } else {
+                req.setAttribute("xlink", "#exclamation-triangle-fill");
+                req.setAttribute("classeAlert", "alert-warning");
+                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível excluir o usuário!");
+            }
+
+            return "usuarios?logica=Listar";
+        }
+    }
 }

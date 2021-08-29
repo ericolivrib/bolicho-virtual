@@ -50,37 +50,45 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">Preço</th>
             <th scope="col">Detalhes</th>
-            <th scope="col">Ações</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Remover</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="p" items="${produtos}">
+            <c:if test="${p.ativo == true}">
             <tr>
-                <th scope="row">${p.id}</th>
                 <td>${p.nome}</td>
                 <td>${p.preco}</td>
                 <td>
-                    <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#produtoModal" data-bs-whatever="${p.detalhes}">
+                    <button type="button" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#produtoModal" data-bs-whatever="${p.detalhes}">
                         <i class="bi bi-eye-fill"></i>
+                    </button>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="<c:url value="produtos?logica=Editar&id=${p.id}"/>">
+                        <i class="bi bi-pencil-square"></i>
                     </a>
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="<c:url value="produtos?logica=Editar&id=${p.id}"/>">Editar</a>
+                    <button type="button" class="btn btn-danger view_data" data-bs-toggle="modal" data-bs-target="#removerProdutoModal" data-bs-whatever="${p.id}">
+                        <i class="bi bi-trash"></i>
+                    </button>
                 </td>
             </tr>
+            </c:if>
         </c:forEach>
         </tbody>
         <tfoot class="table-light">
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">Preço</th>
             <th scope="col">Detalhes</th>
-            <th scope="col">Ações</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Remover</th>
         </tr>
         </tfoot>
     </table>
@@ -109,6 +117,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="removerProdutoModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Remover produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="produtos" method="GET">
+                    <div class="mb-5">
+                        <h6>Após confirmada, essa ação não poderá ser revertida.</h6>
+                    </div>
+
+                    <input type="hidden" name="id" id="id" value="">
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary" name="logica" value="Remover">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var produtoModal = document.getElementById('produtoModal')
     produtoModal.addEventListener('show.bs.modal', function (event) {
@@ -116,6 +149,15 @@
         var descricao = botao.getAttribute('data-bs-whatever')
         var formControl = produtoModal.querySelector('.modal-body textarea')
         formControl.innerHTML = descricao
+    })
+
+    var removerProdutoModal = document.getElementById('removerProdutoModal')
+    removerProdutoModal.addEventListener('show.bs.modal', function (event) {
+        var botao = event.relatedTarget
+        var hidden = botao.getAttribute('data-bs-whatever')
+
+        var inputHidden = removerProdutoModal.querySelector('.modal-body #id')
+        inputHidden.value = hidden
     })
 </script>
 </body>

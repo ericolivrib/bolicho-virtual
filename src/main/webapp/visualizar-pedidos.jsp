@@ -78,30 +78,33 @@
         </ul>
         <thead>
         <tr>
-            <th scope="col">Data</th>
-            <c:choose>
-                <c:when test="${status == 'CONCLUIDO'}">
-                    <th scope="col">Data de entrega</th>
-                </c:when>
-                <c:when test="${status == 'CANCELADO'}">
-                    <th scope="col">Data de cancelamento</th>
-                    <th scope="col">Motivo do cancelamento</th>
-                </c:when>
-            </c:choose>
             <th scope="col">Cliente</th>
             <th scope="col">Vendedor</th>
+            <th scope="col">Data Pedido</th>
+            <c:choose>
+                <c:when test="${status == 'CONCLUIDO'}">
+                    <th scope="col">Data Entrega</th>
+                </c:when>
+                <c:when test="${status == 'CANCELADO'}">
+                    <th scope="col">Data Cancelamento</th>
+                    <th scope="col">Motivo</th>
+                </c:when>
+            </c:choose>
             <th scope="col">Produto</th>
             <th scope="col">Quantidade</th>
             <th scope="col">Valor</th>
             <c:if test="${status == 'PENDENTE'}">
-                <th scope="col">Ações</th>
+                <th scope="col">Concluir</th>
+                <th scope="col">Cancelar</th>
             </c:if>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="p" items="${pedidos}">
             <tr>
-                <th scope="row">${p.dataPedido}</th>
+                <td>${p.cliente.usuario.nome}</td>
+                <td>${p.vendedor.usuario.nome}</td>
+                <td scope="row">${p.dataPedido}</td>
                 <c:choose>
                     <c:when test="${status == 'CONCLUIDO'}">
                         <td>${p.status.data}</td>
@@ -115,20 +118,47 @@
                         </td>
                     </c:when>
                 </c:choose>
-                <td>${p.cliente.usuario.nome}</td>
-                <td>${p.vendedor.usuario.nome}</td>
                 <td>${p.item.produto.nome}</td>
                 <td>${p.item.quantidade}</td>
                 <td>R$ ${p.valor}</td>
                 <c:if test="${status == 'PENDENTE'}">
                     <td>
-                        <a href="<c:url value="pedidos?logica=Atualizar&id=${p.id}&s=${p.status.id}"/>" class="btn btn-primary">Concluir</a>
-                        <button type="button" class="btn btn-danger view_data" data-bs-toggle="modal" data-bs-target="#pedidoModal" data-bs-whatever="${p.id}+${p.status.id}">Cancelar</button>
+                        <a href="<c:url value="pedidos?logica=Atualizar&id=${p.id}&s=${p.status.id}"/>" class="btn btn-primary">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger view_data" data-bs-toggle="modal" data-bs-target="#pedidoModal" data-bs-whatever="${p.id}+${p.status.id}">
+                            <i class="bi bi-x-octagon-fill"></i>
+                        </button>
                     </td>
                 </c:if>
             </tr>
         </c:forEach>
         </tbody>
+        <tfoot>
+        <tr>
+            <th scope="col">Cliente</th>
+            <th scope="col">Vendedor</th>
+            <th scope="col">Data Pedido</th>
+            <c:choose>
+                <c:when test="${status == 'CONCLUIDO'}">
+                    <th scope="col">Data Entrega</th>
+                </c:when>
+                <c:when test="${status == 'CANCELADO'}">
+                    <th scope="col">Data Cancelamento</th>
+                    <th scope="col">Motivo</th>
+                </c:when>
+            </c:choose>
+            <th scope="col">Produto</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Valor</th>
+            <c:if test="${status == 'PENDENTE'}">
+                <th scope="col">Concluir</th>
+                <th scope="col">Cancelar</th>
+            </c:if>
+        </tr>
+        </tfoot>
     </table>
 </section>
 

@@ -58,39 +58,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </c:if>
-        <div class="">
-            <div class="row g-2 mb-3">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="nome" name="nome" value="${produto.nome}" placeholder="Queijo Colonial" required>
-                        <label for="nome">Nome</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="number" step="0.01" min="0" class="form-control" id="preco" name="preco" value="${produto.preco}" placeholder="20" required>
-                        <label for="preco">Preço</label>
-                    </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="detalhes" name="detalhes" placeholder="Fresco ou em inicio de maturação" style="height: 132px;" required>${produto.detalhes}</textarea>
+                    <label for="detalhes">Detalhes</label>
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <textarea class="form-control" id="detalhes" name="detalhes"
-                          placeholder="Fresco ou em inicio de maturação"
-                          style="height: 200px;" required>${produto.detalhes}</textarea>
-                <label for="detalhes">Detalhes</label>
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nome" name="nome" value="${produto.nome}" placeholder="Queijo Colonial" required>
+                    <label for="nome">Nome</label>
+                </div>
+                <div class="form-floating">
+                    <input type="number" step="0.01" min="0" class="form-control" id="preco" name="preco" value="${produto.preco}" placeholder="20" required>
+                    <label for="preco">Preço</label>
+                </div>
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <c:choose>
-                    <c:when test="${produto.id == null}">
-                        <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">Confirmar</button>
-                        <a href="<c:url value="/"/>" class="btn btn-secondary">Cancelar</a>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="submit" class="btn btn-success" name="logica" value="Atualizar">Confirmar</button>
-                        <a href="<c:url value="produtos?logica=Listar"/>" class="btn btn-secondary">Cancelar</a>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <c:choose>
+                <c:when test="${produto.id == null}">
+                    <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">Confirmar</button>
+                    <a href="<c:url value="/"/>" class="btn btn-secondary">Cancelar</a>
+                </c:when>
+                <c:otherwise>
+                    <button type="submit" class="btn btn-success" name="logica" value="Atualizar">Confirmar</button>
+                    <a href="<c:url value="produtos?logica=Listar"/>" class="btn btn-secondary">Cancelar</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </form>
 </section>

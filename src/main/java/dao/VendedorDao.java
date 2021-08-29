@@ -117,25 +117,15 @@ public class VendedorDao implements DAO<Vendedor> {
         try {
             conexao.setAutoCommit(false);
 
-            String sql = "DELETE FROM vendedor WHERE id = ?";
+            String retorno = new UsuarioDao(conexao).deletar(vendedor.getUsuario());
 
-            PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setInt(1, vendedor.getId());
-            ps.executeUpdate();
-
-            if (ps.getUpdateCount() > 0) {
-                String retorno = new UsuarioDao(conexao).deletar(vendedor.getUsuario());
-
-                if (retorno.equals("OK")) {
-                    conexao.commit();
-                    return "OK";
-                }
+            if (retorno.equals("OK")) {
+                conexao.commit();
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro";
         }
-
         return "Erro";
     }
 }

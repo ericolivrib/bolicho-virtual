@@ -66,7 +66,7 @@ public class ProdutoController extends HttpServlet {
             BigDecimal preco = new BigDecimal(req.getParameter("preco"));
             String detalhes = req.getParameter("detalhes");
 
-            Produto produto = new Produto(nome, preco, detalhes);
+            Produto produto = new Produto(nome, preco, detalhes, true);
 
             Connection conexao = (Connection) req.getAttribute("conexao");
 
@@ -154,19 +154,21 @@ public class ProdutoController extends HttpServlet {
 
             int id = Integer.parseInt(req.getParameter("id"));
 
-            Produto produto = new Produto(id);
+            Produto produto = new Produto(id, false);
 
             Connection conexao = (Connection) req.getAttribute("conexao");
 
             String retorno = new ProdutoDao(conexao).deletar(produto);
 
             if (retorno.equals("OK")) {
-                req.setAttribute("retorno", "<strong>OK!</strong> Produto removido!");
+                req.setAttribute("xlink", "#check-circle-fill");
+                req.setAttribute("classeAlert", "alert-success");
+                req.setAttribute("retorno", "<strong>OK!</strong> O produto foi removido!");
             } else {
+                req.setAttribute("xlink", "#exclamation-triangle-fill");
+                req.setAttribute("classeAlert", "alert-warning");
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível remover o produto!");
             }
-
-//            new Listar().executa(req, resp);
 
             req.setAttribute("logica", "Cadastrar");
 

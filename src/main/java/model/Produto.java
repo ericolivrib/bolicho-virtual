@@ -8,6 +8,15 @@ public class Produto {
     private String nome;
     private BigDecimal preco;
     private String detalhes;
+    private boolean ativo;
+
+    public Produto(int id, String nome, BigDecimal preco, String detalhes, boolean ativo) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.detalhes = detalhes;
+        this.ativo = ativo;
+    }
 
     public Produto(int id, String nome, BigDecimal preco, String detalhes) {
         this.id = id;
@@ -16,10 +25,16 @@ public class Produto {
         this.detalhes = detalhes;
     }
 
-    public Produto(String nome, BigDecimal preco, String detalhes) {
+    public Produto(String nome, BigDecimal preco, String detalhes, boolean ativo) {
         this.nome = nome;
         this.preco = preco;
         this.detalhes = detalhes;
+        this.ativo = ativo;
+    }
+
+    public Produto(int id, boolean ativo) {
+        this.id = id;
+        this.ativo = ativo;
     }
 
     public Produto(int id) {
@@ -56,5 +71,13 @@ public class Produto {
 
     public void setDetalhes(String detalhes) {
         this.detalhes = detalhes;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

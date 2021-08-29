@@ -116,19 +116,11 @@ public class ClienteDao implements DAO<Cliente> {
         try {
             conexao.setAutoCommit(false);
 
-            String sql = "DELETE FROM cliente WHERE id = ?";
+            String retorno = new UsuarioDao(conexao).deletar(cliente.getUsuario());
 
-            PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setInt(1, cliente.getId());
-            ps.executeUpdate();
-
-            if (ps.getUpdateCount() > 0) {
-                String retorno = new UsuarioDao(conexao).deletar(cliente.getUsuario());
-
-                if (retorno.equals("OK")) {
-                    conexao.commit();
-                    return "OK";
-                }
+            if (retorno.equals("OK")) {
+                conexao.commit();
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();

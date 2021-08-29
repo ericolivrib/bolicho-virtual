@@ -107,23 +107,23 @@ ALTER TABLE public.endereco ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- Name: item_compra; Type: TABLE; Schema: public; Owner: postgres
+-- Name: item_pedido; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.item_compra (
+CREATE TABLE public.item_pedido (
     id integer NOT NULL,
     quantidade integer,
     produto_id integer
 );
 
 
-ALTER TABLE public.item_compra OWNER TO postgres;
+ALTER TABLE public.item_pedido OWNER TO postgres;
 
 --
 -- Name: item_compra_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.item_compra ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.item_pedido ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.item_compra_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -167,7 +167,8 @@ CREATE TABLE public.produto (
     id integer NOT NULL,
     nome text NOT NULL,
     preco numeric(16,2),
-    detalhes text DEFAULT 'Produto colonial'::text NOT NULL
+    detalhes text DEFAULT 'Produto colonial'::text NOT NULL,
+    ativo boolean DEFAULT true
 );
 
 
@@ -188,10 +189,10 @@ ALTER TABLE public.produto ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- Name: status_compra; Type: TABLE; Schema: public; Owner: postgres
+-- Name: status_pedido; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.status_compra (
+CREATE TABLE public.status_pedido (
     id integer NOT NULL,
     descricao text NOT NULL,
     data_status date,
@@ -199,13 +200,13 @@ CREATE TABLE public.status_compra (
 );
 
 
-ALTER TABLE public.status_compra OWNER TO postgres;
+ALTER TABLE public.status_pedido OWNER TO postgres;
 
 --
 -- Name: status_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.status_compra ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.status_pedido ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.status_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -224,7 +225,6 @@ CREATE TABLE public.usuario (
     nome text NOT NULL,
     telefone text NOT NULL,
     email text NOT NULL,
-    senha text NOT NULL,
     endereco_id integer,
     data_cadastro date,
     ativo boolean
@@ -305,18 +305,6 @@ ALTER TABLE public.vendedor ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 --
 
 COPY public.cliente (id, usuario_id) FROM stdin;
-2	7
-4	12
-\.
-
-
---
--- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.pedido (id, valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) FROM stdin;
-12	30.00	2021-08-11	4	3	13	12
-13	122.20	2021-08-11	4	5	14	13
 \.
 
 
@@ -325,32 +313,22 @@ COPY public.pedido (id, valor, data_pedido, cliente_id, vendedor_id, item_id, st
 --
 
 COPY public.endereco (id, rua, numero_casa, bairro, complemento) FROM stdin;
-7	Avenida Roraima	1000	Camobi	CEU II
-8	Avenida Roraima	1000	Caturrita	
-10	Avenida Roraima	1000	Camobi	
-12	Avenida Roraima 	1000	Camobi	
-13	Davenir Pereira	103	ChÃ¡cara das Flores	Onde o vento faz a curva
-14	Avenida Roraima	1000	Camobi	CEU II
-16	Avenida Roraima	1000	Camobi	CEU II
 \.
 
 
 --
--- Data for Name: item_compra; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: item_pedido; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.item_compra (id, quantidade, produto_id) FROM stdin;
-4	2	7
-5	3	7
-6	3	7
-7	5	2
-8	5	2
-9	4	6
-10	3	6
-11	6	7
-12	3	2
-13	6	2
-14	4	10
+COPY public.item_pedido (id, quantidade, produto_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pedido (id, valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) FROM stdin;
 \.
 
 
@@ -368,30 +346,15 @@ COPY public.permissao (id, descricao) FROM stdin;
 -- Data for Name: produto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.produto (id, nome, preco, detalhes) FROM stdin;
-2	Chimia	5.00	Produto colonial
-1	Queijo da Colonia	27.49	Produto colonial
-6	Licor 600ml	20.56	Produto colonial
-7	Conserva de Pepino	7.00	Produto colonial
-10	Cachaca	30.55	Ingredientes
+COPY public.produto (id, nome, preco, detalhes, ativo) FROM stdin;
 \.
 
 
 --
--- Data for Name: status_compra; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: status_pedido; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.status_compra (id, descricao, data_status, motivo) FROM stdin;
-4	CONCLUÍDO	2021-08-10	\N
-5	CANCELADO	2021-08-10	O cliente desistiu!
-7	CANCELADO	2021-08-11	O cliente desistiu!
-9	CANCELADO	2021-08-11	Cancelado pelo cliente
-6	CONCLUÃDO	2021-08-11	
-8	CONCLUÃDO	2021-08-11	
-10	CONCLUIDO	2021-08-11	
-11	CONCLUÃDO	2021-08-11	
-13	CANCELADO	2021-08-11	Faltou cachaÃ§a
-12	CONCLUIDO	2021-08-11	
+COPY public.status_pedido (id, descricao, data_status, motivo) FROM stdin;
 \.
 
 
@@ -399,12 +362,7 @@ COPY public.status_compra (id, descricao, data_status, motivo) FROM stdin;
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.usuario (id, nome, telefone, email, senha, endereco_id, data_cadastro, ativo) FROM stdin;
-7	Diogo Santana	88 88888-8888	diogosantana@teste.com	940299	8	2021-08-05	\N
-11	Helena Oliveira	99 99999-9999	helenaoliveira@teste.com	9930405	12	2021-08-05	\N
-12	Erico Ribeiro	99 99999-9999	ericoribeiro@teste.com	9930394	13	2021-08-11	\N
-13	Magno Alves	44 44444-4444	magnoalves@teste.com	003304405	14	2021-08-11	\N
-15	Glenio D.	00 00000-0022	gleniodescovi@teste.com	imnfisdfin	16	2021-08-11	\N
+COPY public.usuario (id, nome, telefone, email, endereco_id, data_cadastro, ativo) FROM stdin;
 \.
 
 
@@ -413,11 +371,6 @@ COPY public.usuario (id, nome, telefone, email, senha, endereco_id, data_cadastr
 --
 
 COPY public.usuario_permissao (id, usuario_id, permissao_id) FROM stdin;
-1	7	1
-4	11	2
-5	12	1
-6	13	2
-8	15	2
 \.
 
 
@@ -426,9 +379,6 @@ COPY public.usuario_permissao (id, usuario_id, permissao_id) FROM stdin;
 --
 
 COPY public.vendedor (id, usuario_id) FROM stdin;
-3	11
-4	13
-5	15
 \.
 
 
@@ -436,28 +386,28 @@ COPY public.vendedor (id, usuario_id) FROM stdin;
 -- Name: cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cliente_id_seq', 5, true);
+SELECT pg_catalog.setval('public.cliente_id_seq', 1, false);
 
 
 --
 -- Name: compra_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.compra_id_seq', 13, true);
+SELECT pg_catalog.setval('public.compra_id_seq', 1, false);
 
 
 --
 -- Name: endereco_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.endereco_id_seq', 16, true);
+SELECT pg_catalog.setval('public.endereco_id_seq', 1, false);
 
 
 --
 -- Name: item_compra_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.item_compra_id_seq', 14, true);
+SELECT pg_catalog.setval('public.item_compra_id_seq', 1, false);
 
 
 --
@@ -471,35 +421,35 @@ SELECT pg_catalog.setval('public.permissao_id_seq', 2, true);
 -- Name: produto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.produto_id_seq', 10, true);
+SELECT pg_catalog.setval('public.produto_id_seq', 1, false);
 
 
 --
 -- Name: status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.status_id_seq', 13, true);
+SELECT pg_catalog.setval('public.status_id_seq', 1, false);
 
 
 --
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuario_id_seq', 15, true);
+SELECT pg_catalog.setval('public.usuario_id_seq', 1, false);
 
 
 --
 -- Name: usuario_permissao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuario_permissao_id_seq', 8, true);
+SELECT pg_catalog.setval('public.usuario_permissao_id_seq', 1, false);
 
 
 --
 -- Name: vendedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.vendedor_id_seq', 5, true);
+SELECT pg_catalog.setval('public.vendedor_id_seq', 1, false);
 
 
 --
@@ -527,10 +477,10 @@ ALTER TABLE ONLY public.endereco
 
 
 --
--- Name: item_compra item_compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: item_pedido item_compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.item_compra
+ALTER TABLE ONLY public.item_pedido
     ADD CONSTRAINT item_compra_pkey PRIMARY KEY (id);
 
 
@@ -559,10 +509,10 @@ ALTER TABLE ONLY public.produto
 
 
 --
--- Name: status_compra status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: status_pedido status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.status_compra
+ALTER TABLE ONLY public.status_pedido
     ADD CONSTRAINT status_pkey PRIMARY KEY (id);
 
 
@@ -619,7 +569,7 @@ ALTER TABLE ONLY public.pedido
 --
 
 ALTER TABLE ONLY public.pedido
-    ADD CONSTRAINT compra_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.item_compra(id) NOT VALID;
+    ADD CONSTRAINT compra_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.item_pedido(id) NOT VALID;
 
 
 --
@@ -627,7 +577,7 @@ ALTER TABLE ONLY public.pedido
 --
 
 ALTER TABLE ONLY public.pedido
-    ADD CONSTRAINT compra_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status_compra(id) NOT VALID;
+    ADD CONSTRAINT compra_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status_pedido(id) NOT VALID;
 
 
 --
@@ -639,10 +589,10 @@ ALTER TABLE ONLY public.pedido
 
 
 --
--- Name: item_compra item_compra_produto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: item_pedido item_compra_produto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.item_compra
+ALTER TABLE ONLY public.item_pedido
     ADD CONSTRAINT item_compra_produto_id_fkey FOREIGN KEY (produto_id) REFERENCES public.produto(id);
 
 

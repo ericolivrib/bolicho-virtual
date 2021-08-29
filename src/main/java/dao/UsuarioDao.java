@@ -163,27 +163,17 @@ public class UsuarioDao implements DAO<Usuario> {
         try {
             conexao.setAutoCommit(false);
 
-            String sql  = "DELETE FROM usuario_permissao WHERE usuario_id = ?";
+            String sql = "UPDATE usuario SET ativo = ? WHERE id = ?";
 
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setInt(1, usuario.getId());
+            ps.setBoolean(1, usuario.isAtivo());
+            ps.setInt(2, usuario.getId());
+
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
-                sql = "DELETE FROM usuario WHERE id = ?";
-
-                ps = conexao.prepareStatement(sql);
-                ps.setInt(1, usuario.getId());
-                ps.executeUpdate();
-
-                if (ps.getUpdateCount() > 0) {
-                    String retorno = new EnderecoDao(conexao).deletar(usuario.getEndereco());
-
-                    if (retorno.equals("OK")) {
-                        conexao.commit();
-                        return "OK";
-                    }
-                }
+                conexao.commit();
+                return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,4 +181,5 @@ public class UsuarioDao implements DAO<Usuario> {
 
         return "Erro";
     }
+
 }

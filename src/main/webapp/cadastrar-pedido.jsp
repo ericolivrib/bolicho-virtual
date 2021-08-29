@@ -53,7 +53,9 @@
                 <option selected value="">Selecione</option>
                 <c:forEach var="c" items="${clientes}">
                     <c:if test="${c.usuario.permissao.descricao == 'CLIENTE'}">
-                        <option value="${c.id}">${c.usuario.nome}</option>
+                        <c:if test="${c.usuario.ativo == true}">
+                            <option value="${c.id}">${c.usuario.nome}</option>
+                        </c:if>
                     </c:if>
                 </c:forEach>
             </select>
@@ -65,7 +67,9 @@
                     <select name="produto" id="produto" class="form-select" required>
                         <option selected value="">Selecione</option>
                         <c:forEach var="p" items="${produtos}">
-                            <option value="${p.id}">${p.nome}</option>
+                            <c:if test="${p.ativo == true}">
+                                <option value="${p.id}">${p.nome}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                     <label for="produto">Produto</label>
@@ -88,7 +92,9 @@
                 <option selected value="">Selecione</option>
                 <c:forEach var="v" items="${vendedores}">
                     <c:if test="${v.usuario.permissao.descricao == 'VENDEDOR'}">
-                        <option value="${v.id}">${v.usuario.nome}</option>
+                        <c:if test="${v.usuario.ativo == true}">
+                            <option value="${v.id}">${v.usuario.nome}</option>
+                        </c:if>
                     </c:if>
                 </c:forEach>
             </select>

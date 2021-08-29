@@ -72,53 +72,69 @@
         </ul>
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">E-mail</th>
             <th scope="col">Telefone</th>
             <th scope="col">Endereço</th>
             <th scope="col">Data de cadastro</th>
-            <th scope="col">Ações</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Remover</th>
         </tr>
         </thead>
         <tbody>
         <c:choose>
             <c:when test="${not empty clientes}">
                 <c:forEach var="u" items="${clientes}">
+                    <c:if test="${u.usuario.ativo == true}">
                     <tr>
-                        <th scope="row">${u.id}</th>
                         <td>${u.usuario.nome}</td>
                         <td>${u.usuario.email}</td>
                         <td>${u.usuario.telefone}</td>
                         <td>
-                            <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#usuarioModal" data-bs-whatever="${u.usuario.endereco.rua}+${u.usuario.endereco.numeroCasa}+${u.usuario.endereco.bairro}+${u.usuario.endereco.complemento}">
-                                <i class="bi bi-house-door-fill"></i>
-                            </a>
+                            <button type="button" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#usuarioModal" data-bs-whatever="${u.usuario.endereco.rua}+${u.usuario.endereco.numeroCasa}+${u.usuario.endereco.bairro}+${u.usuario.endereco.complemento}">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
                         </td>
                         <td>${u.usuario.dataCadastro}</td>
                         <td>
-                            <a class="btn btn-primary" href="<c:url value="usuarios?logica=Editar&id=${u.id}&permissao=${u.usuario.permissao.id}" />">Editar</a>
+                            <a class="btn btn-primary" href="<c:url value="usuarios?logica=Editar&id=${u.id}&permissao=${u.usuario.permissao.id}" />">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger view_data" data-bs-toggle="modal" data-bs-target="#excluirUsuarioModal" data-bs-whatever="${u.id}+${u.usuario.id}+${u.usuario.permissao.id}">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
+                    </c:if>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:forEach var="u" items="${vendedores}">
+                    <c:if test="${u.usuario.ativo == true}">
                     <tr>
-                        <th scope="row">${u.id}</th>
                         <td>${u.usuario.nome}</td>
                         <td>${u.usuario.email}</td>
                         <td>${u.usuario.telefone}</td>
                         <td>
-                            <a href="#" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#usuarioModal" data-bs-whatever="${u.usuario.endereco.rua}+${u.usuario.endereco.numeroCasa}+${u.usuario.endereco.bairro}+${u.usuario.endereco.complemento}">
+                            <button type="button" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#usuarioModal" data-bs-whatever="${u.usuario.endereco.rua}+${u.usuario.endereco.numeroCasa}+${u.usuario.endereco.bairro}+${u.usuario.endereco.complemento}">
                                 <i class="bi bi-eye-fill"></i>
-                            </a>
+                            </button>
                         </td>
                         <td>${u.usuario.dataCadastro}</td>
                         <td>
-                            <a class="btn btn-primary" href="<c:url value="usuarios?logica=Editar&id=${u.id}&permissao=${u.usuario.permissao.id}" />">Editar</a>
+                            <a class="btn btn-primary" href="<c:url value="usuarios?logica=Editar&id=${u.id}&permissao=${u.usuario.permissao.id}" />">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger view_data" data-bs-toggle="modal" data-bs-target="#excluirUsuarioModal" data-bs-whatever="${u.id}+${u.usuario.id}+${u.usuario.permissao.id}">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
+                    </c:if>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
@@ -126,13 +142,13 @@
         </tbody>
         <tfoot>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">E-mail</th>
             <th scope="col">Telefone</th>
             <th scope="col">Endereço</th>
             <th scope="col">Data de cadastro</th>
-            <th scope="col">Ações</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Remover</th>
         </tr>
         </tfoot>
     </table>
@@ -179,10 +195,36 @@
     </div>
 </div>
 
+<div class="modal fade" id="excluirUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Excluir usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="usuarios" method="POST">
+                    <div class="mb-5">
+                        <h6>Após confirmada, essa ação não poderá ser revertida.</h6>
+                    </div>
+
+                    <input type="hidden" name="id" id="id" value="">
+                    <input type="hidden" name="u" id="usuarioId" value="">
+                    <input type="hidden" name="p" id="permissaoId" value="">
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary" name="logica" value="Excluir">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-    var produtoModal = document.getElementById('usuarioModal')
-    produtoModal.addEventListener('show.bs.modal', function (event) {
+    var usuarioModal = document.getElementById('usuarioModal')
+    usuarioModal.addEventListener('show.bs.modal', function (event) {
         var botao = event.relatedTarget
         var address = botao.getAttribute('data-bs-whatever')
 
@@ -197,6 +239,20 @@
         numero.value = endereco[1]
         bairro.value = endereco[2]
         complemento.innerHTML = endereco[3]
+    })
+
+    var excluirUsuarioModal = document.getElementById('excluirUsuarioModal')
+    excluirUsuarioModal.addEventListener('show.bs.modal', function (event) {
+        var botao = event.relatedTarget
+        var hidden = botao.getAttribute('data-bs-whatever').split("+")
+
+        var inputHiddenId = excluirUsuarioModal.querySelector('.modal-body #id')
+        var inputHiddenUsuario = excluirUsuarioModal.querySelector('.modal-body #usuarioId')
+        var inputHiddenPermissao = excluirUsuarioModal.querySelector('.modal-body #permissaoId')
+
+        inputHiddenId.value = hidden[0]
+        inputHiddenUsuario.value = hidden[1]
+        inputHiddenPermissao.value = hidden[2]
     })
 </script>
 </body>
