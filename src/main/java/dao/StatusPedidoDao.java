@@ -1,58 +1,57 @@
 package dao;
 
-import model.ItemCompra;
-import model.StatusCompra;
+import model.StatusPedido;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class StatusCompraDao implements DAO<StatusCompra> {
+public class StatusPedidoDao implements DAO<StatusPedido> {
 
     private Connection conexao;
 
-    public StatusCompraDao(Connection conexao) {
+    public StatusPedidoDao(Connection conexao) {
         this.conexao = conexao;
     }
 
     @Override
-    public ArrayList<StatusCompra> selecionar() {
+    public ArrayList<StatusPedido> selecionar() {
 
-        ArrayList<StatusCompra> statusCompras = new ArrayList<>();
+        ArrayList<StatusPedido> statusPedidos = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM status_compra";
+            String sql = "SELECT * FROM status_pedido";
             Statement stmt = conexao.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                StatusCompra status = new StatusCompra(
+                StatusPedido status = new StatusPedido(
                         rs.getInt("id"),
                         rs.getString("descricao"),
                         rs.getDate("data_status").toLocalDate(),
                         rs.getString("motivo")
                 );
-                statusCompras.add(status);
+                statusPedidos.add(status);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return statusCompras;
+        return statusPedidos;
     }
 
     @Override
-    public StatusCompra selecionar(int id) {
+    public StatusPedido selecionar(int id) {
 
-        StatusCompra statusCompra = null;
+        StatusPedido statusPedido = null;
 
         try {
-            String sql = "SELECT * FROM status_compra WHERE id = ?";
+            String sql = "SELECT * FROM status_pedido WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                statusCompra = new StatusCompra(
+                statusPedido = new StatusPedido(
                         rs.getInt("id"),
                         rs.getString("descricao"),
                         rs.getDate("data_status").toLocalDate(),
@@ -62,45 +61,41 @@ public class StatusCompraDao implements DAO<StatusCompra> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return statusCompra;
+        return statusPedido;
     }
 
     @Override
-    public String inserir(StatusCompra statusCompra) {
-
+    public String inserir(StatusPedido statusPedido) {
         try {
             conexao.setAutoCommit(false);
 
-            String sql = "INSERT INTO status_compra (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
+            String sql = "INSERT INTO status_pedido (descricao, data_status, motivo) VALUES (?, CURRENT_DATE, ?)";
             PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1, statusCompra.getDescricao());
-            ps.setString(2, statusCompra.getMotivo());
+            ps.setString(1, statusPedido.getDescricao());
+            ps.setString(2, statusPedido.getMotivo());
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
 
             if (rs.getInt(1) > 0) {
-                statusCompra.setId(rs.getInt(1));
+                statusPedido.setId(rs.getInt(1));
                 conexao.commit();
                 return "OK";
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "Erro";
     }
 
     @Override
-    public String atualizar(StatusCompra statusCompra) {
-
+    public String atualizar(StatusPedido statusPedido) {
         try {
-            String sql = "UPDATE status_compra SET descricao = ?, motivo = ? WHERE id = ?";
+            String sql = "UPDATE status_pedido SET descricao = ?, motivo = ? WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setString(1, statusCompra.getDescricao());
-            ps.setString(2, statusCompra.getMotivo());
-            ps.setInt(3, statusCompra.getId());
+            ps.setString(1, statusPedido.getDescricao());
+            ps.setString(2, statusPedido.getMotivo());
+            ps.setInt(3, statusPedido.getId());
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
@@ -111,12 +106,11 @@ public class StatusCompraDao implements DAO<StatusCompra> {
             e.printStackTrace();
             return "Erro";
         }
-
         return "Erro";
     }
 
     @Override
-    public String deletar(StatusCompra statusCompra) {
+    public String deletar(StatusPedido statusPedido) {
         return null;
     }
 }

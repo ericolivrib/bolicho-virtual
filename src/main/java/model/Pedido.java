@@ -3,17 +3,17 @@ package model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Compra {
+public class Pedido {
 
     private int id;
     private BigDecimal valor;
     private LocalDate dataPedido;
     private Cliente cliente;
     private Vendedor vendedor;
-    private ItemCompra item;
-    private StatusCompra status;
+    private ItemPedido item;
+    private StatusPedido status;
 
-    public Compra(int id, BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
+    public Pedido(int id, BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor, ItemPedido item, StatusPedido status) {
         this.id = id;
         this.valor = valor;
         this.dataPedido = dataPedido;
@@ -23,7 +23,7 @@ public class Compra {
         this.status = status;
     }
 
-    public Compra(int id, BigDecimal valor, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
+    public Pedido(int id, BigDecimal valor, Cliente cliente, Vendedor vendedor, ItemPedido item, StatusPedido status) {
         this.id = id;
         this.valor = valor;
         this.cliente = cliente;
@@ -32,7 +32,7 @@ public class Compra {
         this.status = status;
     }
 
-    public Compra(BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
+    public Pedido(BigDecimal valor, LocalDate dataPedido, Cliente cliente, Vendedor vendedor, ItemPedido item, StatusPedido status) {
         this.valor = valor;
         this.dataPedido = dataPedido;
         this.cliente = cliente;
@@ -41,7 +41,7 @@ public class Compra {
         this.status = status;
     }
 
-    public Compra(BigDecimal valor, Cliente cliente, Vendedor vendedor, ItemCompra item, StatusCompra status) {
+    public Pedido(BigDecimal valor, Cliente cliente, Vendedor vendedor, ItemPedido item, StatusPedido status) {
         this.valor = valor;
         this.cliente = cliente;
         this.vendedor = vendedor;
@@ -49,12 +49,12 @@ public class Compra {
         this.status = status;
     }
 
-    public Compra(int id, StatusCompra status) {
+    public Pedido(int id, StatusPedido status) {
         this.id = id;
         this.status = status;
     }
 
-    public Compra(int id) {
+    public Pedido(int id) {
         this.id = id;
     }
 
@@ -98,19 +98,19 @@ public class Compra {
         this.vendedor = vendedor;
     }
 
-    public ItemCompra getItem() {
+    public ItemPedido getItem() {
         return item;
     }
 
-    public void setItem(ItemCompra item) {
+    public void setItem(ItemPedido item) {
         this.item = item;
     }
 
-    public StatusCompra getStatus() {
+    public StatusPedido getStatus() {
         return status;
     }
 
-    public void setStatus(StatusCompra status) {
+    public void setStatus(StatusPedido status) {
         this.status = status;
     }
 }

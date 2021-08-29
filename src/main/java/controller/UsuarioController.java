@@ -25,7 +25,7 @@ public class UsuarioController extends HttpServlet {
         try {
             Class<?> classe = Class.forName(nomeClasse);
 
-            LogicaNegocio logica = (LogicaNegocio) classe.newInstance();
+            Logica logica = (Logica) classe.newInstance();
             String pagina = logica.executa(req, resp);
 
             req.getRequestDispatcher(pagina).forward(req, resp);
@@ -34,7 +34,7 @@ public class UsuarioController extends HttpServlet {
         }
     }
 
-    public static class Listar implements LogicaNegocio {
+    public static class Listar implements Logica  {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -56,7 +56,7 @@ public class UsuarioController extends HttpServlet {
         }
     }
 
-    public static class Cadastrar implements LogicaNegocio {
+    public static class Cadastrar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -101,11 +101,11 @@ public class UsuarioController extends HttpServlet {
                 req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível cadastrar o usuário!");
             }
 
-            return "operacoes-usuario.jsp";
+            return "cadastrar-usuario.jsp";
         }
     }
 
-    public static class Editar implements LogicaNegocio {
+    public static class Editar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -128,11 +128,11 @@ public class UsuarioController extends HttpServlet {
                 req.setAttribute("u", vendedor);
             }
 
-            return "operacoes-usuario.jsp";
+            return "cadastrar-usuario.jsp";
         }
     }
 
-    public static class Atualizar implements LogicaNegocio {
+    public static class Atualizar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)

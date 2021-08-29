@@ -1,23 +1,23 @@
 package model;
 
-public class ItemCompra {
+public class ItemPedido {
 
     private int id;
     private int quantidade;
     private Produto produto;
 
-    public ItemCompra(int id, int quantidade, Produto produto) {
+    public ItemPedido(int id, int quantidade, Produto produto) {
         this.id = id;
         this.quantidade = quantidade;
         this.produto = produto;
     }
 
-    public ItemCompra(int quantidade, Produto produto) {
+    public ItemPedido(int quantidade, Produto produto) {
         this.quantidade = quantidade;
         this.produto = produto;
     }
 
-    public ItemCompra(int id) {
+    public ItemPedido(int id) {
         this.id = id;
     }
 

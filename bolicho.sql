@@ -47,10 +47,10 @@ ALTER TABLE public.cliente ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- Name: compra; Type: TABLE; Schema: public; Owner: postgres
+-- Name: pedido; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.compra (
+CREATE TABLE public.pedido (
     id integer NOT NULL,
     valor numeric(16,2),
     data_pedido date,
@@ -61,13 +61,13 @@ CREATE TABLE public.compra (
 );
 
 
-ALTER TABLE public.compra OWNER TO postgres;
+ALTER TABLE public.pedido OWNER TO postgres;
 
 --
 -- Name: compra_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.compra ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.pedido ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.compra_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -311,10 +311,10 @@ COPY public.cliente (id, usuario_id) FROM stdin;
 
 
 --
--- Data for Name: compra; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.compra (id, valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) FROM stdin;
+COPY public.pedido (id, valor, data_pedido, cliente_id, vendedor_id, item_id, status_id) FROM stdin;
 12	30.00	2021-08-11	4	3	13	12
 13	122.20	2021-08-11	4	5	14	13
 \.
@@ -511,10 +511,10 @@ ALTER TABLE ONLY public.cliente
 
 
 --
--- Name: compra compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pedido compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.compra
+ALTER TABLE ONLY public.pedido
     ADD CONSTRAINT compra_pkey PRIMARY KEY (id);
 
 
@@ -607,34 +607,34 @@ ALTER TABLE ONLY public.cliente
 
 
 --
--- Name: compra compra_cliente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pedido compra_cliente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.compra
+ALTER TABLE ONLY public.pedido
     ADD CONSTRAINT compra_cliente_id_fkey FOREIGN KEY (cliente_id) REFERENCES public.cliente(id);
 
 
 --
--- Name: compra compra_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pedido compra_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.compra
+ALTER TABLE ONLY public.pedido
     ADD CONSTRAINT compra_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.item_compra(id) NOT VALID;
 
 
 --
--- Name: compra compra_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pedido compra_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.compra
+ALTER TABLE ONLY public.pedido
     ADD CONSTRAINT compra_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status_compra(id) NOT VALID;
 
 
 --
--- Name: compra compra_vendedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pedido compra_vendedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.compra
+ALTER TABLE ONLY public.pedido
     ADD CONSTRAINT compra_vendedor_id_fkey FOREIGN KEY (vendedor_id) REFERENCES public.vendedor(id);
 
 

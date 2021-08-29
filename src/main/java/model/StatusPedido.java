@@ -2,32 +2,32 @@ package model;
 
 import java.time.LocalDate;
 
-public class StatusCompra {
+public class StatusPedido {
 
     private int id;
     private String descricao;
     private LocalDate data;
     private String motivo;
 
-    public StatusCompra(int id, String descricao, LocalDate data, String motivo) {
+    public StatusPedido(int id, String descricao, LocalDate data, String motivo) {
         this.id = id;
         this.descricao = descricao;
         this.data = data;
         this.motivo = motivo;
     }
 
-    public StatusCompra(String descricao, String motivo) {
+    public StatusPedido(String descricao, String motivo) {
         this.descricao = descricao;
         this.motivo = motivo;
     }
 
-    public StatusCompra(int id, String descricao, String motivo) {
+    public StatusPedido(int id, String descricao, String motivo) {
         this.id = id;
         this.descricao = descricao;
         this.motivo = motivo;
     }
 
-    public StatusCompra(int id) {
+    public StatusPedido(int id) {
         this.id = id;
     }
 

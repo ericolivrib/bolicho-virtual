@@ -26,7 +26,7 @@ public class ProdutoController extends HttpServlet {
         try {
             Class<?> classe = Class.forName(nomeClasse);
 
-            LogicaNegocio logica = (LogicaNegocio) classe.newInstance();
+            Logica logica = (Logica) classe.newInstance();
             String pagina = logica.executa(req, resp);
 
             req.getRequestDispatcher(pagina).forward(req, resp);
@@ -35,7 +35,7 @@ public class ProdutoController extends HttpServlet {
         }
     }
 
-    public static class Listar implements LogicaNegocio {
+    public static class Listar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -54,7 +54,7 @@ public class ProdutoController extends HttpServlet {
         }
     }
 
-    public static class Cadastrar implements LogicaNegocio {
+    public static class Cadastrar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -84,11 +84,11 @@ public class ProdutoController extends HttpServlet {
 
             req.setAttribute("logica", "Cadastrar");
 
-            return "operacoes-produto.jsp";
+            return "cadastrar-produto.jsp";
         }
     }
 
-    public static class Editar implements LogicaNegocio {
+    public static class Editar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -105,11 +105,11 @@ public class ProdutoController extends HttpServlet {
             req.setAttribute("produto", produto);
             req.setAttribute("logica", "Atualizar");
 
-            return "operacoes-produto.jsp";
+            return "cadastrar-produto.jsp";
         }
     }
 
-    public static class Atualizar implements LogicaNegocio {
+    public static class Atualizar implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -144,7 +144,7 @@ public class ProdutoController extends HttpServlet {
         }
     }
 
-    public static class Remover implements LogicaNegocio {
+    public static class Remover implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)

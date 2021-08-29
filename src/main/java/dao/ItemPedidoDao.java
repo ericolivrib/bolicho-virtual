@@ -1,35 +1,35 @@
 package dao;
 
-import model.ItemCompra;
+import model.ItemPedido;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ItemCompraDao implements DAO<ItemCompra> {
+public class ItemPedidoDao implements DAO<ItemPedido> {
 
     private Connection conexao;
 
-    public ItemCompraDao(Connection conexao) {
+    public ItemPedidoDao(Connection conexao) {
         this.conexao = conexao;
     }
 
     @Override
-    public ArrayList<ItemCompra> selecionar() {
+    public ArrayList<ItemPedido> selecionar() {
 
-        ArrayList<ItemCompra> itensCompra = new ArrayList<>();
+        ArrayList<ItemPedido> itensCompra = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM item_compra";
+            String sql = "SELECT * FROM item_pedido";
             Statement stmt = conexao.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                ItemCompra itemCompra = new ItemCompra(
+                ItemPedido itemPedido = new ItemPedido(
                         rs.getInt("id"),
                         rs.getInt("quantidade"),
                         new ProdutoDao(conexao).selecionar(rs.getInt("produto_id"))
                 );
-                itensCompra.add(itemCompra);
+                itensCompra.add(itemPedido);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,18 +39,18 @@ public class ItemCompraDao implements DAO<ItemCompra> {
     }
 
     @Override
-    public ItemCompra selecionar(int id) {
+    public ItemPedido selecionar(int id) {
 
-        ItemCompra itemCompra = null;
+        ItemPedido itemPedido = null;
 
         try {
-            String sql = "SELECT * FROM item_compra WHERE id = ?";
+            String sql = "SELECT * FROM item_pedido WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                itemCompra = new ItemCompra(
+                itemPedido = new ItemPedido(
                         rs.getInt("id"),
                         rs.getInt("quantidade"),
                         new ProdutoDao(conexao).selecionar(rs.getInt("produto_id"))
@@ -60,25 +60,25 @@ public class ItemCompraDao implements DAO<ItemCompra> {
             e.printStackTrace();
         }
 
-        return itemCompra;
+        return itemPedido;
     }
 
     @Override
-    public String inserir(ItemCompra itemCompra) {
+    public String inserir(ItemPedido itemPedido) {
 
         try {
             conexao.setAutoCommit(false);
 
-            String sql = "INSERT INTO item_compra (quantidade, produto_id) VALUES (?, ?)";
+            String sql = "INSERT INTO item_pedido (quantidade, produto_id) VALUES (?, ?)";
             PreparedStatement ps = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, itemCompra.getQuantidade());
-            ps.setInt(2, itemCompra.getProduto().getId());
+            ps.setInt(1, itemPedido.getQuantidade());
+            ps.setInt(2, itemPedido.getProduto().getId());
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
 
             if (rs.getInt(1) > 0) {
-                itemCompra.setId(rs.getInt(1));
+                itemPedido.setId(rs.getInt(1));
                 conexao.commit();
                 return "OK";
             }
@@ -90,19 +90,19 @@ public class ItemCompraDao implements DAO<ItemCompra> {
     }
 
     @Override
-    public String atualizar(ItemCompra itemCompra) {
+    public String atualizar(ItemPedido itemPedido) {
         return null;
     }
 
     @Override
-    public String deletar(ItemCompra itemCompra) {
+    public String deletar(ItemPedido itemPedido) {
 
         try {
             conexao.setAutoCommit(false);
 
-            String sql = "DELETE FROM item_compra WHERE id = ?";
+            String sql = "DELETE FROM item_pedido WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setInt(1, itemCompra.getId());
+            ps.setInt(1, itemPedido.getId());
             ps.executeUpdate();
 
             if (ps.getUpdateCount() > 0) {
