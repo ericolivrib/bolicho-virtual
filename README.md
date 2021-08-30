@@ -4,9 +4,8 @@ Sistema web de gerenciamendo de venda de produtos coloniais e artesanais.
 
 ### TODO
 
-- [x] Tabelas do banco 
 - [x] Conexão com a base de dados
-- [x] DAO
-- [x] Controller
-- [ ] View
+- [x] Objetos de Acesso de Dados
+- [x] Servlets controladores
+- [x] Páginas 
 - [x] Tratamento de requisições
