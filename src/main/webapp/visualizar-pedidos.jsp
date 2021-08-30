@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="Java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
 <!doctype html>
 <html lang="pt_BR">
 
@@ -37,6 +36,14 @@
     <div class="d-flex justify-content-center mb-3">
         <h1 class="display-6" style="margin: 30px">Tabela de pedidos</h1>
     </div>
+
+    <c:if test="${not empty retorno}">
+        <div class="alert ${classeAlert} alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="${xlink}"/></svg>
+                ${retorno}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
 
     <table class="table table-striped table-hover">
         <ul class="nav nav-tabs">

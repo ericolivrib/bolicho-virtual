@@ -6,7 +6,7 @@
         <button class="navbar-toggler ml-auto custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" style="border-color: #ffffff;">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand mb-0 h1" href="<c:url value="/"/>" style="color: #ffffff;">BOLICHO</a>
+        <a class="navbar-brand mb-0 h1" href="<c:url value="/"/>" style="font-family: 'Open Sans', sans-serif;">Bolicho</a>
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #000000;">
             <div class="offcanvas-header bg-dark" style="color: #ffffff;">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>

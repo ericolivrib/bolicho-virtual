@@ -75,11 +75,11 @@ public class ProdutoController extends HttpServlet {
             if (retorno.equals("OK")) {
                 req.setAttribute("xlink", "#check-circle-fill");
                 req.setAttribute("classeAlert", "alert-success");
-                req.setAttribute("retorno", "<strong>OK!</strong> " + nome + " foi cadastrado e adicionado à lista de produtos!");
+                req.setAttribute("retorno", "<strong>OK!</strong> O produto foi cadastrado e adicionado à tabela de produtos!");
             } else {
                 req.setAttribute("xlink", "#exclamation-triangle-fill");
                 req.setAttribute("classeAlert", "alert-warning");
-                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível cadastrar " + nome + "!");
+                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível cadastrar o produto!");
             }
 
             req.setAttribute("logica", "Cadastrar");
@@ -131,7 +131,7 @@ public class ProdutoController extends HttpServlet {
             if (retorno.equals("OK")) {
                 req.setAttribute("xlink", "#check-circle-fill");
                 req.setAttribute("classeAlert", "alert-success");
-                req.setAttribute("retorno", "<strong>OK!</strong> Produto atualizado!");
+                req.setAttribute("retorno", "<strong>OK!</strong> O produto foi atualizado!");
             } else {
                 req.setAttribute("xlink", "#exclamation-triangle-fill");
                 req.setAttribute("classeAlert", "alert-warning");

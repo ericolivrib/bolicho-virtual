@@ -14,8 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <script src="js/jquery.maskedinput.js"></script>
-    <script src="js/mask.js"></script>
+    <script>
+        <c:import url="WEB-INF/resources/mask-plugin/src/jquery.mask.js"/>
+    </script>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -207,11 +208,17 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <c:choose>
                     <c:when test="${u.id == null}"> <%-- Cadastrar um usuário --%>
-                        <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">Cadastrar</button>
+                        <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">
+                            <i class="bi bi-person-plus"></i>
+                            Cadastrar
+                        </button>
                         <a href="<c:url value="/"/>" class="btn btn-secondary">Cancelar</a>
                     </c:when>
                     <c:otherwise> <%-- Atualizar um usuário --%>
-                        <button type="submit" class="btn btn-success" name="logica" value="Atualizar">Atualizar</button>
+                        <button type="submit" class="btn btn-success" name="logica" value="Atualizar">
+                            <i class="bi bi-person-check"></i>
+                            Atualizar
+                        </button>
                         <a href="<c:url value="usuarios?logica=Listar"/>" class="btn btn-secondary">Cancelar</a>
                     </c:otherwise>
                 </c:choose>
@@ -219,6 +226,11 @@
         </div>
     </form>
 </section>
+<script>
+    $(document).ready(function($) {
+        $("#telefone").mask("(00) 00000-0000");
+    });
+</script>
 </body>
 
 </html>

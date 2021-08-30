@@ -14,8 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <script src="js/jquery.maskedinput.js"></script>
-    <script src="js/mask.js"></script>
+    <script>
+        <c:import url="WEB-INF/resources/mask-plugin/src/jquery.mask.js"/>
+    </script>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -61,36 +62,47 @@
 
         <div class="row g-3 mb-3">
             <div class="col-md">
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" id="detalhes" name="detalhes" placeholder="Fresco ou em inicio de maturação" style="height: 132px;" required>${produto.detalhes}</textarea>
-                    <label for="detalhes">Detalhes</label>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="form-floating mb-3">
+                <div class="form-floating">
                     <input type="text" class="form-control" id="nome" name="nome" value="${produto.nome}" placeholder="Queijo Colonial" required>
                     <label for="nome">Nome</label>
                 </div>
+            </div>
+            <div class="col-md">
                 <div class="form-floating">
-                    <input type="number" step="0.01" min="0" class="form-control" id="preco" name="preco" value="${produto.preco}" placeholder="20" required>
+                    <input type="text" class="form-control" id="preco" name="preco" value="${produto.preco}" placeholder="20" required>
                     <label for="preco">Preço</label>
                 </div>
             </div>
         </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="detalhes" name="detalhes" placeholder="Fresco ou em inicio de maturação" style="height: 120px;" required>${produto.detalhes}</textarea>
+            <label for="detalhes">Detalhes</label>
+        </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <c:choose>
                 <c:when test="${produto.id == null}">
-                    <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">Confirmar</button>
+                    <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">
+                        <i class="bi bi-bag-check"></i>
+                        Cadastrar
+                    </button>
                     <a href="<c:url value="/"/>" class="btn btn-secondary">Cancelar</a>
                 </c:when>
                 <c:otherwise>
-                    <button type="submit" class="btn btn-success" name="logica" value="Atualizar">Confirmar</button>
+                    <button type="submit" class="btn btn-success" name="logica" value="Atualizar">
+                        <i class="bi bi-bag-check"></i>
+                        Atualizar
+                    </button>
                     <a href="<c:url value="produtos?logica=Listar"/>" class="btn btn-secondary">Cancelar</a>
                 </c:otherwise>
             </c:choose>
         </div>
     </form>
 </section>
+<script>
+    $(document).ready(function($) {
+        $('#preco').mask('#.##0.00', { reverse: true });
+    });
+</script>
 </body>
 
 </html>

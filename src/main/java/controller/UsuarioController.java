@@ -94,7 +94,7 @@ public class UsuarioController extends HttpServlet {
             if (retorno.equals("OK")) {
                 req.setAttribute("xlink", "#check-circle-fill");
                 req.setAttribute("classeAlert", "alert-success");
-                req.setAttribute("retorno", "<strong>OK!</strong> O usuário foi cadastrado!");
+                req.setAttribute("retorno", "<strong>OK!</strong> O usuário foi cadastrado e adicionado à tabela de usuários!");
             } else {
                 req.setAttribute("xlink", "#exclamation-triangle-fill");
                 req.setAttribute("classeAlert", "alert-warning");
@@ -180,7 +180,7 @@ public class UsuarioController extends HttpServlet {
         }
     }
 
-    public static class Excluir implements Logica {
+    public static class Remover implements Logica {
 
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
@@ -206,11 +206,11 @@ public class UsuarioController extends HttpServlet {
             if (retorno.equals("OK")) {
                 req.setAttribute("xlink", "#check-circle-fill");
                 req.setAttribute("classeAlert", "alert-success");
-                req.setAttribute("retorno", "<strong>OK!</strong> O usuário foi excluído!");
+                req.setAttribute("retorno", "<strong>OK!</strong> O usuário foi removido!");
             } else {
                 req.setAttribute("xlink", "#exclamation-triangle-fill");
                 req.setAttribute("classeAlert", "alert-warning");
-                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível excluir o usuário!");
+                req.setAttribute("retorno", "<strong>OPS!</strong> Não foi possível remover o usuário!");
             }
 
             return "usuarios?logica=Listar";

@@ -114,7 +114,7 @@ public class PedidoController extends HttpServlet {
             if (retorno.equals("OK")) {
                 req.setAttribute("xlink", "#check-circle-fill");
                 req.setAttribute("classeAlert", "alert-success");
-                req.setAttribute("retorno", "<strong>OK!</strong> O pedido foi cadastrado!");
+                req.setAttribute("retorno", "<strong>OK!</strong> O pedido foi cadastrado e adicionado à tabela de pedidos na sessão PENDENTES!");
             } else {
                 req.setAttribute("xlink", "#exclamation-triangle-fill");
                 req.setAttribute("classeAlert", "alert-warning");
@@ -158,9 +158,9 @@ public class PedidoController extends HttpServlet {
                 req.setAttribute("classeAlert", "alert-success");
 
                 if (descricao.equals("CANCELADO")) {
-                    req.setAttribute("retorno", "<strong>OK!</strong> O pedido foi cancelado!");
+                    req.setAttribute("retorno", "<strong>OK!</strong> O pedido foi adicionado à sessão CANCELADOS!");
                 } else {
-                    req.setAttribute("retorno", "<strong>OK!</strong> O pedido foi concluído!");
+                    req.setAttribute("retorno", "<strong>OK!</strong> O pedido foi adicionado à sessão CONCLUÍDOS!");
                 }
             } else {
                 req.setAttribute("xlink", "#exclamation-triangle-fill");

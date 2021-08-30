@@ -24,15 +24,18 @@
 
 <section class="container">
 
-    <div class="d-flex justify-content-center mb-3">
-        <h1 class="display-6" style="margin: 30px">Página Principal</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class=" display-4" style="margin: 30px">Olá!</h1>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+        <h2 class="display-6">Escolha uma operação:</h2>
     </div>
 
     <div class="row g-5 mb-3">
         <div class="col">
             <div class="border border-4 border-dark bg-primary bg-gradient" style="border-radius: 10px;">
                 <div class="d-flex justify-content-center">
-                    <i class="bi bi-people-fill" style="font-size: 8em"></i>
+                    <i class="bi bi-people-fill" style="font-size: 7em"></i>
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushUsuarios">
                     <div class="accordion-item border" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
@@ -62,7 +65,7 @@
         <div class="col">
             <div class="border border-4 border-dark bg-warning bg-gradient" style="border-radius: 10px;">
                 <div class="d-flex justify-content-center">
-                    <i class="bi bi-basket2-fill" style="font-size: 8em"></i>
+                    <i class="bi bi-basket2-fill" style="font-size: 7em"></i>
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushProdutos">
                     <div class="accordion-item border" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
@@ -92,7 +95,7 @@
         <div class="col">
             <div class="border border-4 border-dark bg-success bg-gradient" style="border-radius: 10px;">
                 <div class="d-flex justify-content-center">
-                    <i class="bi bi-table" style="font-size: 8em"></i>
+                    <i class="bi bi-table" style="font-size: 7em"></i>
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushPedidos">
                     <div class="accordion-item border" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
