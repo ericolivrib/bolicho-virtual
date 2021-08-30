@@ -40,8 +40,6 @@ public class UsuarioController extends HttpServlet {
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            System.out.println("[USUÁRIOS] Gerando lista de usuários do sistema...");
-
             Connection conexao = (Connection) req.getAttribute("conexao");
 
             String permissao = req.getParameter("permissao");
@@ -61,8 +59,6 @@ public class UsuarioController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[USUARIOS] Cadastrando usuário...");
 
             String nome = req.getParameter("nome");
             String email = req.getParameter("email");
@@ -110,8 +106,6 @@ public class UsuarioController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[USUÁRIOS] Selecionando usuário para edição...");
 
             int id = Integer.parseInt(req.getParameter("id"));
             int permissao = Integer.parseInt(req.getParameter("permissao"));

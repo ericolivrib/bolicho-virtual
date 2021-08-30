@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="Java" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!doctype html>
 <html lang="pt_BR">
 
@@ -111,20 +113,25 @@
             <tr>
                 <td>${p.cliente.usuario.nome}</td>
                 <td>${p.vendedor.usuario.nome}</td>
-                <td scope="row">${p.dataPedido}</td>
-                <c:choose>
-                    <c:when test="${status == 'CONCLUIDO'}">
-                        <td>${p.status.data}</td>
-                    </c:when>
-                    <c:when test="${status == 'CANCELADO'}">
-                        <td>${p.status.data}</td>
+                <td>
+                    <fmt:parseDate value="${p.dataPedido}" pattern="yyyy-MM-dd" var="dataPedido" type="date"/>
+                    <fmt:formatDate pattern="dd/MM/yyyy" value="${dataPedido}"/>
+                </td>
+
+                <c:if test="${status != 'PENDENTE'}">
+                    <td>
+                        <fmt:parseDate value="${p.status.data}" pattern="yyyy-MM-dd" var="dataStatus" type="date"/>
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${dataStatus}"/>
+                    </td>
+                    <c:if test="${status == 'CANCELADO'}">
                         <td>
                             <button type="button" class="btn btn-outline-dark view_data" data-bs-toggle="modal" data-bs-target="#motivoCancelamentoModal" data-bs-whatever="${p.status.motivo}">
                                 <i class="bi bi-eye-fill"></i>
                             </button>
                         </td>
-                    </c:when>
-                </c:choose>
+                    </c:if>
+                </c:if>
+
                 <td>${p.item.produto.nome}</td>
                 <td>${p.item.quantidade}</td>
                 <td>R$ ${p.valor}</td>

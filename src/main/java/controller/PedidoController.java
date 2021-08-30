@@ -41,8 +41,6 @@ public class PedidoController extends HttpServlet {
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            System.out.println("[PEDIDOS] Listando pedidos da base de dados...");
-
             String status = req.getParameter("status");
             ArrayList<Pedido> pedidos = new ArrayList<>();
 
@@ -67,8 +65,6 @@ public class PedidoController extends HttpServlet {
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            System.out.println("[COMPRA] Iniciando compra...");
-
             Connection conexao = (Connection) req.getAttribute("conexao");
 
             ArrayList<Produto> produtos = new ProdutoDao(conexao).selecionar();
@@ -88,8 +84,6 @@ public class PedidoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[COMPRA] Cadastrando pedido...");
 
             int p = Integer.parseInt(req.getParameter("produto"));
             int c = Integer.parseInt(req.getParameter("cliente"));
@@ -130,8 +124,6 @@ public class PedidoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[COMPRA] Atualizando status da pedido...");
 
             int id = Integer.parseInt(req.getParameter("id"));
             int s = Integer.parseInt(req.getParameter("s"));

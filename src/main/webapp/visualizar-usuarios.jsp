@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="Java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!doctype html>
 <html lang="pt">
@@ -94,7 +95,10 @@
                                 <i class="bi bi-eye-fill"></i>
                             </button>
                         </td>
-                        <td>${u.usuario.dataCadastro}</td>
+                        <td>
+                            <fmt:parseDate value="${u.usuario.dataCadastro}" pattern="yyyy-MM-dd" var="dataCadastro" type="date"/>
+                            <fmt:formatDate pattern="dd/MM/yyyy" value="${dataCadastro}"/>
+                        </td>
                         <td>
                             <a class="btn btn-primary" href="<c:url value="usuarios?logica=Editar&id=${u.id}&permissao=${u.usuario.permissao.id}" />">
                                 <i class="bi bi-pencil-square"></i>
@@ -121,7 +125,10 @@
                                 <i class="bi bi-eye-fill"></i>
                             </button>
                         </td>
-                        <td>${u.usuario.dataCadastro}</td>
+                        <td>
+                            <fmt:parseDate value="${u.usuario.dataCadastro}" pattern="yyyy-MM-dd" var="dataCadastro" type="date"/>
+                            <fmt:formatDate pattern="dd/MM/yyyy" value="${dataCadastro}"/>
+                        </td>
                         <td>
                             <a class="btn btn-primary" href="<c:url value="usuarios?logica=Editar&id=${u.id}&permissao=${u.usuario.permissao.id}" />">
                                 <i class="bi bi-pencil-square"></i>

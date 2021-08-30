@@ -44,7 +44,7 @@
                                 Usuários
                             </button>
                         </h2>
-                        <div id="acoes-usuarios" class="accordion-collapse collapse border border-0" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushUsuarios" style="background-color: #f3f3f3;">
+                        <div id="acoes-usuarios" class="accordion-collapse collapse border border-0" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushUsuarios" style="background-color: #e1e1e1;">
                             <div class="accordion-body">
                                 <a href="<c:url value="/cadastrar-usuario.jsp"/>" class="btn d-flex justify-content-center">
                                     Cadastrar Usuário
@@ -74,7 +74,7 @@
                                 Produtos
                             </button>
                         </h2>
-                        <div id="acoes-produtos" class="accordion-collapse collapse border border-0" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushProdutos" style="background-color: #f3f3f3;">
+                        <div id="acoes-produtos" class="accordion-collapse collapse border border-0" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushProdutos" style="background-color: #e1e1e1;">
                             <div class="accordion-body">
                                 <a href="<c:url value="/cadastrar-produto.jsp"/>" class="btn d-flex justify-content-center">
                                     Cadastrar Produto
@@ -104,7 +104,7 @@
                                 Pedidos
                             </button>
                         </h2>
-                        <div id="acoes-pedido" class="accordion-collapse collapse border border-0" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushPedidos" style="background-color: #f3f3f3;">
+                        <div id="acoes-pedido" class="accordion-collapse collapse border border-0" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushPedidos" style="background-color: #e1e1e1;">
                             <div class="accordion-body">
                                 <a href="<c:url value="pedidos?logica=Registrar"/>" class="btn d-flex justify-content-center">
                                     Cadastrar Pedido

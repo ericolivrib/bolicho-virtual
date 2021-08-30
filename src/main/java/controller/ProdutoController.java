@@ -41,8 +41,6 @@ public class ProdutoController extends HttpServlet {
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            System.out.println("[PRODUTOS] Listando produtos...");
-
             Connection conexao = (Connection) req.getAttribute("conexao");
 
             ArrayList<Produto> produtos = new ProdutoDao(conexao).selecionar();
@@ -59,8 +57,6 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[PRODUTOS] Adicionando produto...");
 
             String nome = req.getParameter("nome");
             BigDecimal preco = new BigDecimal(req.getParameter("preco"));
@@ -94,8 +90,6 @@ public class ProdutoController extends HttpServlet {
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            System.out.println("[PRODUTOS] Selecionando produto para edição...");
-
             int id = Integer.parseInt(req.getParameter("id"));
 
             Connection conexao = (Connection) req.getAttribute("conexao");
@@ -114,8 +108,6 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[PRODUTOS] Atualizando produto...");
 
             int id = Integer.parseInt(req.getParameter("id"));
             String nome = req.getParameter("nome");
@@ -149,8 +141,6 @@ public class ProdutoController extends HttpServlet {
         @Override
         public String executa(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            System.out.println("[PRODUTOS] Removendo produto...");
 
             int id = Integer.parseInt(req.getParameter("id"));
 
