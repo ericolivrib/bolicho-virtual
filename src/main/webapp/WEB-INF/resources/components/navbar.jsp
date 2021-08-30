@@ -6,7 +6,7 @@
         <button class="navbar-toggler ml-auto custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" style="border-color: #ffffff;">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand mb-0 h1" href="#" style="color: #ffffff;">Bolicho</a>
+        <a class="navbar-brand mb-0 h1" href="<c:url value="/"/>" style="color: #ffffff;">BOLICHO</a>
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #000000;">
             <div class="offcanvas-header bg-dark" style="color: #ffffff;">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
@@ -34,7 +34,7 @@
                     <li><hr class="dropdown-divider bg-white"></li>
                     <li>
                         <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle active">
-                            <i class="bi bi-grid"></i>
+                            <i class="bi bi-basket2"></i>
                             <span class="ms-1 d-none d-sm-inline">Produtos</span>
                         </a>
                         <ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
