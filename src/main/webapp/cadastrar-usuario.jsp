@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script>
-        <c:import url="WEB-INF/resources/mask-plugin/src/jquery.mask.js"/>
+        <c:import url="WEB-INF/resources/js/jquery.mask.js"/>
     </script>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -35,7 +35,7 @@
 
 <body>
 <header class="mb-5">
-    <c:import url="WEB-INF/resources/components/navbar.jsp"/>
+    <c:import url="WEB-INF/resources/jsp/navbar.jsp"/>
 </header>
 
 <section class="container">
@@ -63,172 +63,170 @@
             </div>
         </c:if>
 
-        <div class="">
-            <div class="mb-3">
-                <h5>Informações de contato:</h5>
-            </div>
+        <div class="mb-3">
+            <h5>Informações de contato:</h5>
+        </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="nome" id="nome" value="${u.usuario.nome}" placeholder="Helena Silva Oliveira" required>
-                <label for="nome">Nome</label>
-            </div>
-            <div class="row g-2 mb-3">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="email" class="form-control" name="email" id="email" value="${u.usuario.email}" placeholder="usuario@exemplo.com" required>
-                        <label for="email">E-mail</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="telefone" id="telefone" value="${u.usuario.telefone}" placeholder="99 99999-9999" required>
-                        <label for="telefone">Telefone</label>
-                    </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="nome" id="nome" value="${u.usuario.nome}" placeholder="Helena Silva Oliveira" required>
+            <label for="nome">Nome</label>
+        </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="email" class="form-control" name="email" id="email" value="${u.usuario.email}" placeholder="usuario@exemplo.com" required>
+                    <label for="email">E-mail</label>
                 </div>
             </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="telefone" id="telefone" value="${u.usuario.telefone}" required>
+                    <label for="telefone">Telefone</label>
+                </div>
+            </div>
+        </div>
 
-            <div class="mb-3">
-                <h5>Informações de endereço:</h5>
-            </div>
+        <div class="mb-3">
+            <h5>Informações de endereço:</h5>
+        </div>
 
-            <div class="row g-2 mb-3">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="rua" id="rua" value="${u.usuario.endereco.rua}" placeholder="Avenida Roraima" required>
-                        <label for="rua">Rua</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" name="numero" id="numero" value="${u.usuario.endereco.numeroCasa}" placeholder="1000" required>
-                        <label for="numero">Número</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <select name="bairro" id="bairro" class="form-select" required>
-                            <c:choose>
-                                <c:when test="${u.id != null}">
-                                    <option selected value="${u.usuario.endereco.bairro}">${u.usuario.endereco.bairro}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option selected value="">Selecione</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <option value="Agroindustrial">Agroindustrial</option>
-                            <option value="Arroio Grande">Arroio Grande</option>
-                            <option value="Boi Morto">Boi Morto</option>
-                            <option value="Bonfim">Bonfim</option>
-                            <option value="Camobi">Camobi</option>
-                            <option value="Campestre do Menino Deus">Campestre do Menino Deus</option>
-                            <option value="Caramelo">Caramelo</option>
-                            <option value="Carolina">Carolina</option>
-                            <option value="Caturrita">Caturrita</option>
-                            <option value="Cauduro">Cauduro</option>
-                            <option value="Centro">Centro</option>
-                            <option value="Cerrito">Cerrito</option>
-                            <option value="Chácara das Flores">Chácara das Flores</option>
-                            <option value="Cohab F Ferrari">Cohab F Ferrari</option>
-                            <option value="Cohab Passo Ferreira">Cohab Passo Ferreira</option>
-                            <option value="Cohab Santa Maria">Cohab Santa Maria</option>
-                            <option value="Cohab Tancredo Neves">Cohab Tancredo Neves</option>
-                            <option value="Diácono João Luiz Pozzobon">Diácono João Luiz Pozzobon</option>
-                            <option value="Distrito Industrial">Distrito Industrial</option>
-                            <option value="Divina Providência">Divina Providência</option>
-                            <option value="Dom Antônio Reis">Dom Antônio Reis</option>
-                            <option value="Duque de Caxias">Duque de Caxias</option>
-                            <option value="Faixa Soo Pedro">Faixa Soo Pedro</option>
-                            <option value="Formosa">Formosa</option>
-                            <option value="Industrial">Industrial</option>
-                            <option value="Itararé">Itararé</option>
-                            <option value="Itarajú">Itarajú</option>
-                            <option value="Juscelino Kubitschek">Juscelino Kubitschek</option>
-                            <option value="Km 3">Km 3</option>
-                            <option value="Lorenzi">Lorenzi</option>
-                            <option value="Maringá">Maringá</option>
-                            <option value="Medianeira">Medianeira</option>
-                            <option value="Menino Jesus">Menino Jesus</option>
-                            <option value="Noal">Noal</option>
-                            <option value="Nonoai">Nonoai</option>
-                            <option value="Nossa Senhora das Dores">Nossa Senhora das Dores</option>
-                            <option value="Nossa Senhora de Fátima">Nossa Senhora de Fátima</option>
-                            <option value="Nossa Senhora de Lourdes">Nossa Senhora de Lourdes</option>
-                            <option value="Nossa Senhora do Perpétuo Socorro">Nossa Senhora do Perpétuo Socorro</option>
-                            <option value="Nossa Senhora do Rosário">Nossa Senhora do Rosário</option>
-                            <option value="Nossa Senhora Dores">Nossa Senhora Dores</option>
-                            <option value="Nossa Senhora Medianeira">Nossa Senhora Medianeira</option>
-                            <option value="Nova Santa Marta">Nova Santa Marta</option>
-                            <option value="Padre de Platano">Padre de Platano</option>
-                            <option value="Passo D'areia">Passo D'areia</option>
-                            <option value="Passo Tropas">Passo Tropas</option>
-                            <option value="Patronato">Patronato</option>
-                            <option value="Pinheiro Machado">Pinheiro Machado</option>
-                            <option value="Presidente João Goulart">Presidente João Goulart</option>
-                            <option value="Renascença">Renascença</option>
-                            <option value="Retiro Padres">Retiro Padres</option>
-                            <option value="Ruralcel">Ruralcel</option>
-                            <option value="Salgado Filho">Salgado Filho</option>
-                            <option value="São João">São João</option>
-                            <option value="São José">São José</option>
-                            <option value="Subúrbios">Subúrbios</option>
-                            <option value="Switch">Switch</option>
-                            <option value="Tancredo Neves">Tancredo Neves</option>
-                            <option value="Tomazetti">Tomazetti</option>
-                            <option value="Uglione">Uglione</option>
-                            <option value="Urlandia">Urlandia</option>
-                            <option value="Vila Arco-íris">Vila Arco-íris</option>
-                            <option value="Vila Bilibio">Vila Bilibio</option>
-                            <option value="Vila Fighera">Vila Fighera</option>
-                            <option value="Vila Formosa">Vila Formosa</option>
-                            <option value="Zona Rural">Zona Rural</option>
-                        </select>
-                        <label for="bairro">Bairro</label>
-                    </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="rua" id="rua" value="${u.usuario.endereco.rua}" placeholder="Avenida Roraima" required>
+                    <label for="rua">Rua</label>
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="complemento" id="complemento" value="${u.usuario.endereco.complemento}" placeholder="CEU II">
-                <label for="complemento">Complemento</label>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="number" class="form-control" name="numero" id="numero" value="${u.usuario.endereco.numeroCasa}" placeholder="1000" required>
+                    <label for="numero">Número</label>
+                </div>
             </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <select name="bairro" id="bairro" class="form-select" required>
+                        <c:choose>
+                            <c:when test="${u.id != null}">
+                                <option selected value="${u.usuario.endereco.bairro}">${u.usuario.endereco.bairro}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option selected value="">Selecione</option>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="Agroindustrial">Agroindustrial</option>
+                        <option value="Arroio Grande">Arroio Grande</option>
+                        <option value="Boi Morto">Boi Morto</option>
+                        <option value="Bonfim">Bonfim</option>
+                        <option value="Camobi">Camobi</option>
+                        <option value="Campestre do Menino Deus">Campestre do Menino Deus</option>
+                        <option value="Caramelo">Caramelo</option>
+                        <option value="Carolina">Carolina</option>
+                        <option value="Caturrita">Caturrita</option>
+                        <option value="Cauduro">Cauduro</option>
+                        <option value="Centro">Centro</option>
+                        <option value="Cerrito">Cerrito</option>
+                        <option value="Chácara das Flores">Chácara das Flores</option>
+                        <option value="Cohab F Ferrari">Cohab F Ferrari</option>
+                        <option value="Cohab Passo Ferreira">Cohab Passo Ferreira</option>
+                        <option value="Cohab Santa Maria">Cohab Santa Maria</option>
+                        <option value="Cohab Tancredo Neves">Cohab Tancredo Neves</option>
+                        <option value="Diácono João Luiz Pozzobon">Diácono João Luiz Pozzobon</option>
+                        <option value="Distrito Industrial">Distrito Industrial</option>
+                        <option value="Divina Providência">Divina Providência</option>
+                        <option value="Dom Antônio Reis">Dom Antônio Reis</option>
+                        <option value="Duque de Caxias">Duque de Caxias</option>
+                        <option value="Faixa Soo Pedro">Faixa Soo Pedro</option>
+                        <option value="Formosa">Formosa</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Itararé">Itararé</option>
+                        <option value="Itarajú">Itarajú</option>
+                        <option value="Juscelino Kubitschek">Juscelino Kubitschek</option>
+                        <option value="Km 3">Km 3</option>
+                        <option value="Lorenzi">Lorenzi</option>
+                        <option value="Maringá">Maringá</option>
+                        <option value="Medianeira">Medianeira</option>
+                        <option value="Menino Jesus">Menino Jesus</option>
+                        <option value="Noal">Noal</option>
+                        <option value="Nonoai">Nonoai</option>
+                        <option value="Nossa Senhora das Dores">Nossa Senhora das Dores</option>
+                        <option value="Nossa Senhora de Fátima">Nossa Senhora de Fátima</option>
+                        <option value="Nossa Senhora de Lourdes">Nossa Senhora de Lourdes</option>
+                        <option value="Nossa Senhora do Perpétuo Socorro">Nossa Senhora do Perpétuo Socorro</option>
+                        <option value="Nossa Senhora do Rosário">Nossa Senhora do Rosário</option>
+                        <option value="Nossa Senhora Dores">Nossa Senhora Dores</option>
+                        <option value="Nossa Senhora Medianeira">Nossa Senhora Medianeira</option>
+                        <option value="Nova Santa Marta">Nova Santa Marta</option>
+                        <option value="Padre de Platano">Padre de Platano</option>
+                        <option value="Passo D'areia">Passo D'areia</option>
+                        <option value="Passo Tropas">Passo Tropas</option>
+                        <option value="Patronato">Patronato</option>
+                        <option value="Pinheiro Machado">Pinheiro Machado</option>
+                        <option value="Presidente João Goulart">Presidente João Goulart</option>
+                        <option value="Renascença">Renascença</option>
+                        <option value="Retiro Padres">Retiro Padres</option>
+                        <option value="Ruralcel">Ruralcel</option>
+                        <option value="Salgado Filho">Salgado Filho</option>
+                        <option value="São João">São João</option>
+                        <option value="São José">São José</option>
+                        <option value="Subúrbios">Subúrbios</option>
+                        <option value="Switch">Switch</option>
+                        <option value="Tancredo Neves">Tancredo Neves</option>
+                        <option value="Tomazetti">Tomazetti</option>
+                        <option value="Uglione">Uglione</option>
+                        <option value="Urlandia">Urlandia</option>
+                        <option value="Vila Arco-íris">Vila Arco-íris</option>
+                        <option value="Vila Bilibio">Vila Bilibio</option>
+                        <option value="Vila Fighera">Vila Fighera</option>
+                        <option value="Vila Formosa">Vila Formosa</option>
+                        <option value="Zona Rural">Zona Rural</option>
+                    </select>
+                    <label for="bairro">Bairro</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="complemento" id="complemento" value="${u.usuario.endereco.complemento}" placeholder="CEU II">
+            <label for="complemento">Complemento</label>
+        </div>
 
-            <div class="mb-3">
-                <h5>Permissão do usuário:</h5>
-            </div>
+        <div class="mb-3">
+            <h5>Permissão do usuário:</h5>
+        </div>
 
-            <c:if test="${u.id == null}">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="permissao" id="permissao1" value="CLIENTE" checked>
-                    <label class="form-check-label" for="permissao1">Cliente</label>
-                </div>
-                <div class="form-check form-check-inline mb-3">
-                    <input class="form-check-input" type="radio" name="permissao" id="permissao2" value="VENDEDOR">
-                    <label class="form-check-label" for="permissao2">Vendedor</label>
-                </div>
-            </c:if>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <c:choose>
-                    <c:when test="${u.id == null}"> <%-- Cadastrar um usuário --%>
-                        <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">
-                            <i class="bi bi-person-plus"></i>
-                            Cadastrar
-                        </button>
-                        <a href="<c:url value="/"/>" class="btn btn-secondary">Cancelar</a>
-                    </c:when>
-                    <c:otherwise> <%-- Atualizar um usuário --%>
-                        <button type="submit" class="btn btn-success" name="logica" value="Atualizar">
-                            <i class="bi bi-person-check"></i>
-                            Atualizar
-                        </button>
-                        <a href="<c:url value="usuarios?logica=Listar"/>" class="btn btn-secondary">Cancelar</a>
-                    </c:otherwise>
-                </c:choose>
+        <c:if test="${u.id == null}">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="permissao" id="permissao1" value="CLIENTE" checked>
+                <label class="form-check-label" for="permissao1">Cliente</label>
             </div>
+            <div class="form-check form-check-inline mb-3">
+                <input class="form-check-input" type="radio" name="permissao" id="permissao2" value="VENDEDOR">
+                <label class="form-check-label" for="permissao2">Vendedor</label>
+            </div>
+        </c:if>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <c:choose>
+                <c:when test="${u.id == null}"> <%-- Cadastrar um usuário --%>
+                    <button type="submit" class="btn btn-success" name="logica" value="Cadastrar">
+                        <i class="bi bi-person-plus"></i>
+                        Cadastrar
+                    </button>
+                    <a href="<c:url value="/"/>" class="btn btn-secondary">Cancelar</a>
+                </c:when>
+                <c:otherwise> <%-- Atualizar um usuário --%>
+                    <button type="submit" class="btn btn-success" name="logica" value="Atualizar">
+                        <i class="bi bi-person-check"></i>
+                        Atualizar
+                    </button>
+                    <a href="<c:url value="usuarios?logica=Listar"/>" class="btn btn-secondary">Cancelar</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </form>
 </section>
 <script>
     $(document).ready(function($) {
-        $("#telefone").mask("(00) 00000-0000");
+        $("#telefone").mask("(00) 00000-0000", {placeholder: "(  ) _____-____"});
     });
 </script>
 </body>

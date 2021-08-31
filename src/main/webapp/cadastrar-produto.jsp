@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script>
-        <c:import url="WEB-INF/resources/mask-plugin/src/jquery.mask.js"/>
+        <c:import url="WEB-INF/resources/js/jquery.mask.js"/>
     </script>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -35,7 +35,7 @@
 
 <body>
 <header class="mb-5">
-    <c:import url="WEB-INF/resources/components/navbar.jsp"/>
+    <c:import url="WEB-INF/resources/jsp/navbar.jsp"/>
 </header>
 
 <section class="container">
@@ -100,7 +100,7 @@
 </section>
 <script>
     $(document).ready(function($) {
-        $('#preco').mask('#.##0.00', { reverse: true });
+        $('#preco').mask('#.##0.00', {reverse: true});
     });
 </script>
 </body>

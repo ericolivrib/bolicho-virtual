@@ -32,7 +32,7 @@
 
 <body>
 <header class="mb-5">
-    <c:import url="WEB-INF/resources/components/navbar.jsp"/>
+    <c:import url="WEB-INF/resources/jsp/navbar.jsp"/>
 </header>
 
 <section class="container">

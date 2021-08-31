@@ -19,7 +19,7 @@
 
 <body>
 <header class="mb-5">
-    <c:import url="WEB-INF/resources/components/navbar.jsp"/>
+    <c:import url="WEB-INF/resources/jsp/navbar.jsp"/>
 </header>
 
 <section class="container">
@@ -35,7 +35,7 @@
         <div class="col">
             <div class="border border-4 border-dark bg-primary bg-gradient" style="border-radius: 10px;">
                 <div class="d-flex justify-content-center">
-                    <i class="bi bi-people-fill" style="font-size: 7em"></i>
+                    <i class="bi bi-people-fill" style="font-size: 6em"></i>
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushUsuarios">
                     <div class="accordion-item border" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
@@ -65,7 +65,7 @@
         <div class="col">
             <div class="border border-4 border-dark bg-warning bg-gradient" style="border-radius: 10px;">
                 <div class="d-flex justify-content-center">
-                    <i class="bi bi-basket2-fill" style="font-size: 7em"></i>
+                    <i class="bi bi-basket2-fill" style="font-size: 6em"></i>
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushProdutos">
                     <div class="accordion-item border" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
@@ -95,7 +95,7 @@
         <div class="col">
             <div class="border border-4 border-dark bg-success bg-gradient" style="border-radius: 10px;">
                 <div class="d-flex justify-content-center">
-                    <i class="bi bi-table" style="font-size: 7em"></i>
+                    <i class="bi bi-table" style="font-size: 6em"></i>
                 </div>
                 <div class="accordion accordion-flush" id="accordionFlushPedidos">
                     <div class="accordion-item border" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
